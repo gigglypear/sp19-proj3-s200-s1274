@@ -18,7 +18,7 @@ public class TestWorld {
 
     /**Hard-coding, SEED should be a RANDOM INPUT selected by USER
      */
-<<<<<<< HEAD
+
 //    private static final long SEED = 2099087;
 //    private static final Random RANDOM = new Random(SEED);
 //
@@ -57,7 +57,7 @@ public class TestWorld {
 //        }
 //        return new Pos[] {startP, endP};
 //    }
-=======
+
     private static final long SEED = 87687;
     private static final Random RANDOM = new Random(SEED);
 
@@ -87,7 +87,6 @@ public class TestWorld {
         }
         return result;
     }
->>>>>>> 50463e4d8dba2c573f9d7a167597fb563b4f5d8d
 
     protected static Pos[] roomValidator(List<Room> rooms, TETile[][] world) {
 
@@ -116,7 +115,6 @@ public class TestWorld {
             }
         }
 
-<<<<<<< HEAD
         //List of rooms that are added to the world
         List<Room> rooms = new ArrayList();
 
@@ -154,8 +152,8 @@ public class TestWorld {
 
 
 
-=======
-        List<Room> rooms = new ArrayList();
+
+        rooms = new ArrayList();
 
         for (int i = 0; i < 10; i++) {
 
@@ -164,7 +162,6 @@ public class TestWorld {
             Pos[] pos = roomValidator(rooms, world);
             rooms.add(new Room(pos[0], pos[1]));
             world = Room.draw(world, pos[0], pos[1], Tileset.FLOOR);
->>>>>>> 50463e4d8dba2c573f9d7a167597fb563b4f5d8d
 
 //        for (int i = 0; i < 10; i++) {
 //
@@ -177,11 +174,8 @@ public class TestWorld {
 //
 //        }
 
-<<<<<<< HEAD
-=======
         }
 
->>>>>>> 50463e4d8dba2c573f9d7a167597fb563b4f5d8d
         ter.renderFrame(world);
     }
 
