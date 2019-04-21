@@ -3,6 +3,9 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+/**protected class ????
+ *
+ */
 public class Pos {
 
     public int x;
@@ -21,5 +24,11 @@ public class Pos {
             return false;
         }
         return true;
+    }
+
+
+    public boolean isOpen() {
+        //TODO
+        return false;
     }
 }

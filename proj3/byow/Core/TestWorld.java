@@ -4,6 +4,8 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TestWorld {
@@ -20,7 +22,7 @@ public class TestWorld {
     private static final Random RANDOM = new Random(SEED);
 
 
-    private static Pos roomStartPos(TETile[][] world) {
+    protected static Pos roomStartPos(TETile[][] world) {
         boolean isValid = false;
         Pos result = new Pos(0, 0);
         while (!isValid) {
@@ -30,7 +32,7 @@ public class TestWorld {
         return result;
     }
 
-    private static Pos roomEndPos(Pos startP, TETile[][] world) {
+    protected static Pos roomEndPos(Pos startP, TETile[][] world) {
         boolean isValid = false;
         Pos result = new Pos(0, 0);
         while (!isValid) {
@@ -39,6 +41,20 @@ public class TestWorld {
             isValid = result.validatePos(UPPERCORNER, "room", world);
         }
         return result;
+    }
+
+    protected static Pos[] roomValidator(List<Room> rooms, TETile[][] world) {
+
+        boolean isValid = true;
+        Pos startP = new Pos(0, 0);
+        Pos endP = new Pos(0, 0);
+        while (isValid) {
+            startP = roomStartPos(world);
+            endP = roomEndPos(startP, world);
+            Room potentialRm = new Room(startP, endP);
+            isValid = potentialRm.overlap(rooms);
+        }
+        return new Pos[] {startP, endP};
     }
 
     public static void main(String[] args) {
@@ -54,15 +70,19 @@ public class TestWorld {
             }
         }
 
-        for (int i = 0; i < 4; i++) {
+        List<Room> rooms = new ArrayList();
 
-            Pos startP = roomStartPos(world);
-            Pos endP = roomEndPos(startP, world);
-            world = Room.add(world, startP, endP, Tileset.FLOOR);
+        for (int i = 0; i < 10; i++) {
+
+//            Pos startP = roomStartPos(world);
+//            Pos endP = roomEndPos(startP, world);
+            Pos[] pos = roomValidator(rooms, world);
+            rooms.add(new Room(pos[0], pos[1]));
+            world = Room.draw(world, pos[0], pos[1], Tileset.FLOOR);
+
+
         }
 
-
-        world[29][29] = Tileset.WALL;
         ter.renderFrame(world);
     }
 
