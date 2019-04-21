@@ -5,7 +5,7 @@ import byow.TileEngine.TETile;
 public interface Spaces {
 
 
-    boolean isOpen();
+    boolean isConnected();
 
     ///do we need it??????
     TETile[][] size();
