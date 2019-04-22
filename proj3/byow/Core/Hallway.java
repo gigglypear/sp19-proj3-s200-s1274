@@ -19,6 +19,8 @@ public class Hallway implements Spaces {
             world[start.x + 1][i] = Tileset.WALL;
         }
 
+        world[end.x][end.y] = Tileset.WALL;
+
         return world;
     }
 
@@ -29,6 +31,8 @@ public class Hallway implements Spaces {
             world[i][start.y] = t;
             world[i][start.y + 1] = Tileset.WALL;
         }
+
+        world[end.x][end.y] = Tileset.WALL;
 
         return world;
     }
