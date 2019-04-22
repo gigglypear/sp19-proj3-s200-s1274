@@ -51,6 +51,11 @@ public class Room implements Spaces {
 //        return world;
 //    }
 
+    /**
+     * Drawing the room where the room is closed off (no openings)
+     * @param world
+     * @param t
+     */
     public void draw(TETile[][] world, TETile t) {
 
         Pos start = this.startP;
@@ -77,6 +82,13 @@ public class Room implements Spaces {
 
     }
 
+    /**
+     * @param direction -- Given a randomly selected direction (0 = north)
+     * @param r -- of class Random generated from the seed; used to get
+     *          a random x/y value for the tile you want to open on the side of the
+     *          given direction
+     * @param world
+     */
     public void randomOpeningGenerator(int direction, Random r, TETile[][] world) {
         int x;
         int y;
@@ -102,6 +114,11 @@ public class Room implements Spaces {
     }
 
 
+    /**
+     * Currently works for approach where generate all rooms first
+     * @param rooms -- list of rooms
+     * @return
+     */
     public boolean overlap(List<Room> rooms) {
         for(Room r: rooms) {
             if (this.startP.x <= r.endP.x && this.endP.x >= r.startP.x
@@ -135,10 +152,23 @@ public class Room implements Spaces {
     }
 
 
+    /**
+     * Opens tiles
+     * @param world
+     * @param p -- position of tile you want to open
+     * @param t
+     */
     public void open(TETile[][] world, Pos p, TETile t) {
         world[p.x][p.y] = t;
     }
 
+    /**
+     * Closes tile at a given direction (side)
+     * @param world
+     * @param direction
+     * @param p
+     * @return
+     */
     public TETile[][] Close(TETile[][] world, String direction, Pos p) {
         world[p.x][p.y] = Tileset.WALL;
 

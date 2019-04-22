@@ -28,18 +28,27 @@ public class SimpleTest {
         }
 
 
+        /**
+         * Simple test where we initalize a room and then generate random openings on
+         * a given orientation
+         */
+        //Generate initial room
         Room room1 = new Room(new Pos(35, 12), new Pos(41, 16));
         room1.draw(world, Tileset.FLOOR);
 
+        //Randomly decide if a side (direction) needs to be open
         int[] openPos = new int[4];
         for (int i = 0; i < 4; i++) {
             openPos[i] = RANDOM.nextInt(4);
         }
 
+        //If no sides were opened during random selection then randomly select a room side
+        //to open
         while (IntStream.of(openPos).sum() == 0) {
             openPos[RANDOM.nextInt(3)] = 1;
         }
 
+        //Using method to open a tile at a given side
         for (int i = 0; i < 4; i++) {
             if (openPos[i] != 0) {
                 room1.randomOpeningGenerator(i, RANDOM, world);

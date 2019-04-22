@@ -24,6 +24,14 @@ public class Hallway implements Spaces {
         return world;
     }
 
+    /**
+     * Generate a hallway where the start is an opening and the ending is closed
+     * @param world
+     * @param start
+     * @param end
+     * @param t
+     * @return
+     */
     public static TETile[][] drawHor(TETile[][] world, Pos start, Pos end, TETile t) {
 
         for (int i = start.x; i < end.x + 1; i++) {
@@ -37,6 +45,14 @@ public class Hallway implements Spaces {
         return world;
     }
 
+    /**
+     * Still in progress, probably don't need?
+     * @param world
+     * @param start
+     * @param end
+     * @param t
+     * @return
+     */
     public static TETile[][] drawCorner(TETile[][] world, Pos start, Pos end, TETile t) {
 
 
