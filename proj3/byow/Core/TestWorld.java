@@ -10,10 +10,8 @@ import java.util.Random;
 
 public class TestWorld {
 
-    /**Hard-coding, width and height ARE NOT 30
-     */
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 40;
+    private static final int WIDTH = 80;
+    private static final int HEIGHT = 30;
     private static final Pos UPPERCORNER = new Pos(WIDTH - 1, HEIGHT - 1);
 
     /**Hard-coding, SEED should be a RANDOM INPUT selected by USER
