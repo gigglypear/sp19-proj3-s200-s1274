@@ -117,37 +117,37 @@ public class TestWorld {
         List<Room> rooms = new ArrayList();
 
 
-        //Draws a one room
-        Pos r1Start = new Pos(5, 5);
-        Pos r1End = new Pos(12, 12);
-
-        Room placedRoom = new Room(r1Start, r1End);
-        rooms.add(placedRoom);
-
-        Room.draw(world, r1Start, r1End, Tileset.FLOOR);
-
-        //Draws overlapping room
-        Pos r2Start = new Pos(7,3);
-        Pos r2End = new Pos(9, 14);
-
-        Room potentialRm = new Room(r2Start, r2End);
-        boolean isValid = potentialRm.overlap(rooms);
-        System.out.println(isValid);
-
-        //Room.draw(world, r2Start, r2End, Tileset.FLOOR);
-
-
-        //Draws non-overlapping room
-        Pos r3Start = new Pos(1,1);
-        Pos r3End = new Pos(3, 3);
-
-        Room potentialRm2 = new Room(r3Start, r3End);
-        boolean isValid2 = potentialRm2.overlap(rooms);
-        System.out.println(isValid2);
-
-        Room.draw(world, r3Start, r3End, Tileset.FLOOR);
-
-
+//        //Draws a one room
+//        Pos r1Start = new Pos(5, 5);
+//        Pos r1End = new Pos(12, 12);
+//
+//        Room placedRoom = new Room(r1Start, r1End);
+//        rooms.add(placedRoom);
+//
+//        Room.draw(world, r1Start, r1End, Tileset.FLOOR);
+//
+//        //Draws overlapping room
+//        Pos r2Start = new Pos(7,3);
+//        Pos r2End = new Pos(9, 14);
+//
+//        Room potentialRm = new Room(r2Start, r2End);
+//        boolean isValid = potentialRm.overlap(rooms);
+//        System.out.println(isValid);
+//
+//        //Room.draw(world, r2Start, r2End, Tileset.FLOOR);
+//
+//
+//        //Draws non-overlapping room
+//        Pos r3Start = new Pos(1,1);
+//        Pos r3End = new Pos(3, 3);
+//
+//        Room potentialRm2 = new Room(r3Start, r3End);
+//        boolean isValid2 = potentialRm2.overlap(rooms);
+//        System.out.println(isValid2);
+//
+//        Room.draw(world, r3Start, r3End, Tileset.FLOOR);
+//
+//
 
 
 
@@ -158,8 +158,9 @@ public class TestWorld {
 //            Pos startP = roomStartPos(world);
 //            Pos endP = roomEndPos(startP, world);
             Pos[] pos = roomValidator(rooms, world);
-            rooms.add(new Room(pos[0], pos[1]));
-            world = Room.draw(world, pos[0], pos[1], Tileset.FLOOR);
+            Room room1 = new Room(pos[0], pos[1]);
+            rooms.add(room1);
+//            world = room1.draw(world, Tileset.FLOOR);
 
 //        for (int i = 0; i < 10; i++) {
 //

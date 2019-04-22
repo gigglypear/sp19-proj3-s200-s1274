@@ -19,8 +19,6 @@ public class Hallway implements Spaces {
             world[start.x + 1][i] = Tileset.WALL;
         }
 
-        Close(world,end);
-
         return world;
     }
 
@@ -35,7 +33,7 @@ public class Hallway implements Spaces {
         return world;
     }
 
-    public static TETile[][] draw(TETile[][] world, Pos start, Pos end, TETile t) {
+    public static TETile[][] drawCorner(TETile[][] world, Pos start, Pos end, TETile t) {
 
 
         return world;
@@ -51,14 +49,14 @@ public class Hallway implements Spaces {
         return new TETile[0][];
     }
 
-    @Override
-    public static TETile[][] Open(TETile[][] world, Pos p, TETile t) {
+
+    public  TETile[][] Open(TETile[][] world, Pos p, TETile t) {
         world[p.x][p.y] = t;
         return world;
     }
 
-    @Override
-    public static TETile[][] Close(TETile[][] world, Pos p) {
+
+    public  TETile[][] Close(TETile[][] world, Pos p) {
         world[p.x][p.y] = Tileset.WALL;
         return world;
     }
