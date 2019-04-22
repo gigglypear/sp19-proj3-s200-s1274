@@ -81,8 +81,15 @@ public class Room implements Spaces {
         return new TETile[0][];
     }
 
+    @Override
+    public TETile[][] Open(TETile[][] world, Pos p, TETile t) {
+        world[p.x][p.y] = t;
+        return world;
+    }
 
-
-
-
+    @Override
+    public TETile[][] Close(TETile[][] world, Pos p) {
+        world[p.x][p.y] = Tileset.WALL;
+        return world;
+    }
 }
