@@ -11,7 +11,7 @@ public class SimpleTest {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 30;
-    private static final long SEED = 809977; //87687;
+    private static final long SEED = 99976; //87687;
     private static final Random RANDOM = new Random(SEED);
 
     public static void main(String[] args) {
@@ -58,15 +58,23 @@ public class SimpleTest {
 
         //Generate initial room
 
-        Room room1 = Room.roomGenerator(world, RANDOM);
-        Room.draw(world, room1, Tileset.FLOOR);
+        //Room room1 = Room.roomGenerator(world, RANDOM);
 
-        Room room2 = Room.roomGenerator(world, RANDOM);
-        Room.draw(world, room2, Tileset.FLOOR);
+        Pos start1 = new Pos(5, 6);
+        Pos end1 = new Pos(10, 15);
+        Room room1 = new Room(start1, end1);
+        room1.draw(world, Tileset.FLOOR);
+
+        Pos start2 = new Pos(12, 20);
+        Pos end2 = new Pos(22, 26);
+        Room room2 = new Room(start2, end2);
+        //Room room2 = Room.roomGenerator(world, RANDOM);
+        room2.draw(world, Tileset.FLOOR);
 
 
 
-
+        Hallway h = new Hallway(new Pos(12, 23), new Pos(7, 15));
+        Hallway.drawL(world, Tileset.FLOOR, new Pos(7, 23), h);
 
 
 

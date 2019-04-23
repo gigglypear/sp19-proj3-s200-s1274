@@ -19,7 +19,7 @@ public class Room implements Spaces {
     private boolean connected;
 
     private Pos[] openings;
-    private static List<Room> allRooms;
+    private List<Room> allRooms;
 
     public Room(Pos start, Pos end) {
         startP = start;
@@ -29,66 +29,40 @@ public class Room implements Spaces {
     }
 
 
-    /**
-     * Generates a random room object with x and y values selected between bounds
-     * Checks that starting and ending x and y values are valid values
-     * @param world
-     * @param seed
-     * @return
-     */
-    public static Room roomGenerator(TETile[][] world, Random seed) {
-        int startX = RandomUtils.uniform(seed ,3, 15);
-        int startY = RandomUtils.uniform(seed, 3, 15);
-
-        int endX = RandomUtils.uniform(seed, 5, 20);
-        int endY = RandomUtils.uniform(seed, 5, 20);
-
-        boolean isValid = false;
-
-        while(startX >=  endX){
-            startY = RandomUtils.uniform(seed, 3, 15);
-
-        }
-
-        while(startY >= endY){
-            endY = RandomUtils.uniform(seed, 5, 20);
-        }
-
-        Pos startPos = new Pos(startX, startY);
-        Pos endPos = new Pos(endX, endY);
-        Room room = new Room(startPos, endPos);
-
-        return room;
-
-        //room.draw(world, Tileset.FLOOR);
-
-    }
-
-//    public static TETile[][] draw(TETile[][] world, Pos start, Pos end, TETile t) {
+//    /**
+//     * Generates a random room object with x and y values selected between bounds
+//     * Checks that starting and ending x and y values are valid values
+//     * @param world
+//     * @param seed
+//     * @return
+//     */
+//    public static Room roomGenerator(TETile[][] world, Random seed) {
+//        int startX = RandomUtils.uniform(seed ,3, 15);
+//        int startY = RandomUtils.uniform(seed, 3, 15);
 //
-//        //Create the left and right walls
-//        for(int i = start.y; i < end.y + 1; i++) {
-//            world[start.x][i] = Tileset.WALL;
-//            world[end.x][i] = Tileset.WALL;
+//        int endX = RandomUtils.uniform(seed, 5, 20);
+//        int endY = RandomUtils.uniform(seed, 5, 20);
+//
+//        boolean isValid = false;
+//
+//        while(startX >=  endX){
+//            startY = RandomUtils.uniform(seed, 3, 15);
+//
 //        }
 //
-//        for(int j = start.x + 1; j < end.x; j++) {
-//            //create the first entry as wall
-//            world[j][start.y] = Tileset.WALL;
-//
-//            //create 2nd to 1 before last as floors
-//            for (int k = start.y + 1; k < end.y; k++) {
-//                world[j][k] = t;
-//            }
-//
-//            //create last entry as wall
-//            world[j][end.y] = Tileset.WALL;
+//        while(startY >= endY){
+//            endY = RandomUtils.uniform(seed, 5, 20);
 //        }
 //
-//        return world;
+//        Pos startPos = new Pos(startX, startY);
+//        Pos endPos = new Pos(endX, endY);
+//        Room room = new Room(startPos, endPos);
+//
+//        return room;
+//
+//        //room.draw(world, Tileset.FLOOR);
+//
 //    }
-
-
 
 
     /**
@@ -97,38 +71,10 @@ public class Room implements Spaces {
      * @param world
      * @param t
      */
-//    public void draw(TETile[][] world, TETile t) {
-//
-//        Pos start = this.startP;
-//        Pos end = this.endP;
-//
-//        //Create the left and right walls
-//        for(int i = start.y; i < end.y + 1; i++) {
-//            world[start.x][i] = Tileset.WALL;
-//            world[end.x][i] = Tileset.WALL;
-//        }
-//
-//        for(int j = start.x + 1; j < end.x; j++) {
-//            //create the first entry as wall
-//            world[j][start.y] = Tileset.WALL;
-//
-//            //create 2nd to 1 before last as floors
-//            for (int k = start.y + 1; k < end.y; k++) {
-//                world[j][k] = t;
-//            }
-//
-//            //create last entry as wall
-//            world[j][end.y] = Tileset.WALL;
-//        }
-//
-////        allRooms.add(this);
-//
-//    }
+    public void draw(TETile[][] world, TETile t) {
 
-        public static TETile[][] draw(TETile[][] world, Room room, TETile t) {
-
-        Pos start = room.startP;
-        Pos end = room.endP;
+        Pos start = this.startP;
+        Pos end = this.endP;
 
         //Create the left and right walls
         for(int i = start.y; i < end.y + 1; i++) {
@@ -149,10 +95,9 @@ public class Room implements Spaces {
             world[j][end.y] = Tileset.WALL;
         }
 
-        allRooms.add(room);
 
-        return world;
     }
+
 
 
 
