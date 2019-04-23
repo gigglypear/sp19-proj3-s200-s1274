@@ -19,7 +19,7 @@ public class Room implements Spaces {
     private boolean connected;
 
     private Pos[] openings;
-    private List<Room> allRooms;
+    private static List<Room> allRooms;
 
     public Room(Pos start, Pos end) {
         startP = start;
@@ -30,7 +30,7 @@ public class Room implements Spaces {
 
 
     /**
-     * Generates a random room object
+     * Generates a random room object with x and y values selected between bounds
      * Checks that starting and ending x and y values are valid values
      * @param world
      * @param seed
@@ -148,6 +148,8 @@ public class Room implements Spaces {
             //create last entry as wall
             world[j][end.y] = Tileset.WALL;
         }
+
+        allRooms.add(room);
 
         return world;
     }

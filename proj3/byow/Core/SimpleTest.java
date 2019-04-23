@@ -11,7 +11,7 @@ public class SimpleTest {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 30;
-    private static final long SEED = 3939920; //87687;
+    private static final long SEED = 809977; //87687;
     private static final Random RANDOM = new Random(SEED);
 
     public static void main(String[] args) {
