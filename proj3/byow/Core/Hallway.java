@@ -24,7 +24,16 @@ public class Hallway implements Spaces {
         Pos start = h.startP;
         Pos end = h.endP;
 
-        for (int i = start.y; i < end.y + 1; i++) {
+        int s;
+        int e;
+        if (start.y < end.y) {
+            s = start.y;
+            e = end.y;
+        } else {
+            e = start.y;
+            s = end.y;
+        }
+        for (int i = s; i < e + 1; i++) {
             world[start.x - 1][i] = Tileset.WALL;
             world[start.x][i] = t;
             world[start.x + 1][i] = Tileset.WALL;
@@ -45,7 +54,17 @@ public class Hallway implements Spaces {
         Pos start = h.startP;
         Pos end = h.endP;
 
-        for (int i = start.x; i < end.x + 1; i++) {
+        int s;
+        int e;
+        if (start.x < end.x) {
+            s = start.x;
+            e = end.x;
+        } else {
+            e = start.x;
+            s = end.x;
+        }
+
+        for (int i = s; i < e + 1; i++) {
             world[i][start.y - 1] = Tileset.WALL;
             world[i][start.y] = t;
             world[i][start.y + 1] = Tileset.WALL;

@@ -60,22 +60,37 @@ public class SimpleTest {
 
         //Room room1 = Room.roomGenerator(world, RANDOM);
 
-        Pos start1 = new Pos(5, 6);
-        Pos end1 = new Pos(10, 15);
+//        Pos start1 = new Pos(5, 6);
+//        Pos end1 = new Pos(10, 15);
+//        Room room1 = new Room(start1, end1);
+//        room1.draw(world, Tileset.FLOOR);
+//
+//        Pos start2 = new Pos(12, 20);
+//        Pos end2 = new Pos(22, 26);
+//        Room room2 = new Room(start2, end2);
+//        //Room room2 = Room.roomGenerator(world, RANDOM);
+//        room2.draw(world, Tileset.FLOOR);
+//
+//
+//
+//        Hallway h = new Hallway(new Pos(16, 20), new Pos(10, 11));
+//        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 11), h);
+
+        Pos start1 = new Pos(5, 15);
+        Pos end1 = new Pos(10, 21);
         Room room1 = new Room(start1, end1);
         room1.draw(world, Tileset.FLOOR);
 
-        Pos start2 = new Pos(12, 20);
-        Pos end2 = new Pos(22, 26);
+        Pos start2 = new Pos(12, 10);
+        Pos end2 = new Pos(22, 15);
         Room room2 = new Room(start2, end2);
         //Room room2 = Room.roomGenerator(world, RANDOM);
         room2.draw(world, Tileset.FLOOR);
 
 
 
-        Hallway h = new Hallway(new Pos(12, 23), new Pos(7, 15));
-        Hallway.drawL(world, Tileset.FLOOR, new Pos(7, 23), h);
-
+        Hallway h = new Hallway(new Pos(16, 15), new Pos(10, 19));
+        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 19), h);
 
 
         ter.renderFrame(world);
