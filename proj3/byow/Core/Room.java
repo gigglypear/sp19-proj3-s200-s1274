@@ -29,29 +29,32 @@ public class Room implements Spaces {
     }
 
 
-//    /**
-//     * Generates a random room object with x and y values selected between bounds
-//     * Checks that starting and ending x and y values are valid values
-//     * @param world
-//     * @param seed
-//     * @return
-//     */
-//    public static Room roomGenerator(TETile[][] world, Random seed) {
-//        int startX = RandomUtils.uniform(seed ,3, 15);
-//        int startY = RandomUtils.uniform(seed, 3, 15);
+    /**
+     * NON STATIC ROOM GENERATOR
+     * Generates a random room object with x and y values selected between bounds
+     * Checks that starting and ending x and y values are valid values
+     * WARNING: Kind of creates large rooms since bounds can go to ends
+     * @param world
+     * @param seed
+     * @return
+     */
+//    public Room roomGenerator(TETile[][] world, Random seed) {
 //
-//        int endX = RandomUtils.uniform(seed, 5, 20);
-//        int endY = RandomUtils.uniform(seed, 5, 20);
+//        int startX = RandomUtils.uniform(seed ,0, world.length);
+//        int startY = RandomUtils.uniform(seed,  0, world[0].length);
+//
+//        int endX = RandomUtils.uniform(seed, 5, world.length);
+//        int endY = RandomUtils.uniform(seed, 5, world[0].length);
 //
 //        boolean isValid = false;
 //
 //        while(startX >=  endX){
-//            startY = RandomUtils.uniform(seed, 3, 15);
+//            startY = RandomUtils.uniform(seed, 5, world[0].length);
 //
 //        }
 //
 //        while(startY >= endY){
-//            endY = RandomUtils.uniform(seed, 5, 20);
+//            endY = RandomUtils.uniform(seed, 5, world[0].length);
 //        }
 //
 //        Pos startPos = new Pos(startX, startY);
@@ -60,10 +63,37 @@ public class Room implements Spaces {
 //
 //        return room;
 //
-//        //room.draw(world, Tileset.FLOOR);
-//
 //    }
 
+
+    public static Room roomGenerator(TETile[][] world, Random seed) {
+
+        int startX = RandomUtils.uniform(seed ,0, world.length);
+        int startY = RandomUtils.uniform(seed,  0, world[0].length);
+
+//        int endX = RandomUtils.uniform(seed, 5, world.length);
+//        int endY = RandomUtils.uniform(seed, 5, world[0].length);
+        int endX = RandomUtils.uniform(seed, 5, world.length);
+        int endY = RandomUtils.uniform(seed, 5, world[0].length);
+
+        boolean isValid = false;
+
+        while(startX >=  endX){
+            startY = RandomUtils.uniform(seed, 5, world[0].length);
+
+        }
+
+        while(startY >= endY){
+            endY = RandomUtils.uniform(seed, 5, world[0].length);
+        }
+
+        Pos startPos = new Pos(startX, startY);
+        Pos endPos = new Pos(endX, endY);
+        Room room = new Room(startPos, endPos);
+
+        return room;
+
+    }
 
     /**
      * Drawing the room where the room is closed off (no openings)
@@ -97,6 +127,8 @@ public class Room implements Spaces {
 
 
     }
+
+
 
 
 
@@ -203,4 +235,6 @@ public class Room implements Spaces {
 
         return world;
     }
+
+
 }

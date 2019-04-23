@@ -11,7 +11,7 @@ public class SimpleTest {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 30;
-    private static final long SEED = 99976; //87687;
+    private static final long SEED = 3939; //87687;
     private static final Random RANDOM = new Random(SEED);
 
     public static void main(String[] args) {
@@ -76,21 +76,47 @@ public class SimpleTest {
 //        Hallway h = new Hallway(new Pos(16, 20), new Pos(10, 11));
 //        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 11), h);
 
-        Pos start1 = new Pos(5, 15);
-        Pos end1 = new Pos(10, 21);
-        Room room1 = new Room(start1, end1);
+
+//        /**
+//         * Connecting two rooms with turning hallway
+//         */
+//        Pos start1 = new Pos(5, 15);
+//        Pos end1 = new Pos(10, 21);
+//        Room room1 = new Room(start1, end1);
+//        room1.draw(world, Tileset.FLOOR);
+//
+//        Pos start2 = new Pos(12, 10);
+//        Pos end2 = new Pos(22, 15);
+//        Room room2 = new Room(start2, end2);
+//        //Room room2 = Room.roomGenerator(world, RANDOM);
+//        room2.draw(world, Tileset.FLOOR);
+//
+//
+//
+//        Hallway h = new Hallway(new Pos(16, 15), new Pos(10, 19));
+//        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 19), h);
+
+
+        /**
+         * NON STATIC room generator test where you need to call on rooms
+         * to generate another room
+         */
+//        Pos start1 = new Pos(5, 15);
+//        Pos end1 = new Pos(10, 21);
+//        Room room1 = new Room(start1, end1);
+//        room1.draw(world, Tileset.FLOOR);
+//
+//
+//        Room room2 = room1.roomGenerator(world, RANDOM);
+//        room2.draw(world, Tileset.FLOOR);
+
+
+        Room room1 = Room.roomGenerator(world, RANDOM);
         room1.draw(world, Tileset.FLOOR);
 
-        Pos start2 = new Pos(12, 10);
-        Pos end2 = new Pos(22, 15);
-        Room room2 = new Room(start2, end2);
-        //Room room2 = Room.roomGenerator(world, RANDOM);
+        Room room2 = Room.roomGenerator(world, RANDOM);
         room2.draw(world, Tileset.FLOOR);
 
-
-
-        Hallway h = new Hallway(new Pos(16, 15), new Pos(10, 19));
-        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 19), h);
 
 
         ter.renderFrame(world);
