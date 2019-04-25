@@ -3,6 +3,7 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,14 +18,16 @@ public class World {
     private static final Random RANDOM = new Random(SEED);
 
     private List<Room> allRooms;
-    private HashMap<Room, Pos> OpenRm;
+//    private HashMap<Room, Pos> OpenRm;
+    private HashMap<Pos, Room> PosToRm;
     private List<Pos> openFringe;
 
     private int totalRms;
 
     public World() {
         allRooms = new ArrayList<>();
-        OpenRm = new HashMap<>();
+//        OpenRm = new HashMap<>();
+        PosToRm = new HashMap<>();
         openFringe = new ArrayList<>();
         totalRms = 0;
     }
@@ -35,44 +38,79 @@ public class World {
         /**
          * Generalization for method
          */
-        int direction = RandomUtils.uniform(RANDOM, 3);
+//        int direction = RandomUtils.uniform(RANDOM, 3);
+//
+//        Room initRm = Room.roomGenerator(world, RANDOM);
+//        initRm.draw(world, Tileset.FLOOR);
+//        totalRms += 1;
+//
+//        Pos open1 = initRm.randomOpeningGenerator(direction, RANDOM, world);
+//        OpenRm.put(initRm, open1);
+//        openFringe.add(open1);
+//
+//
+////        int maxRms = RandomUtils.uniform(RANDOM, 3, 16);
+//        int maxRms = 4; /**hard code for now; CHANGE*/
+//        Room currRm = initRm;
+//
+//        while(maxRms != totalRms + 1){
+//            Room RmToConnect = Room.roomGenerator(world, RANDOM);
+//            RmToConnect.draw(world, Tileset.FLOOR);
+//            totalRms += 1;
+//
+//            Pos endOpen = RmToConnect.randomOpeningGenerator(direction, RANDOM, world);
+//            OpenRm.put(RmToConnect, endOpen);
+//            openFringe.add(endOpen);
+//
+//            Pos startOpen= OpenRm.get(currRm);
+//
+//
+//
+//            World.connect(world, startOpen, endOpen);
+//
+//            currRm = RmToConnect;
+//        }
 
-        Room initRm = Room.roomGenerator(world, RANDOM);
-        initRm.draw(world, Tileset.FLOOR);
+        /**
+         * Generate a random world
+         */
+
+        Room currRm = Room.roomGenerator(world, RANDOM);
+        currRm.draw(world, Tileset.FLOOR);
+
         totalRms += 1;
+        int maxRms = 8; /**hard code for now; CHANGE*/
 
-        Pos open1 = initRm.randomOpeningGenerator(direction, RANDOM, world);
-        OpenRm.put(initRm, open1);
-        openFringe.add(open1);
-
-
-//        int maxRms = RandomUtils.uniform(RANDOM, 3, 16);
-        int maxRms = 4; /**hard code for now; CHANGE*/
-        Room currRm = initRm;
-
-        while(maxRms != totalRms + 1){
+        while(maxRms != totalRms) {
             Room RmToConnect = Room.roomGenerator(world, RANDOM);
             RmToConnect.draw(world, Tileset.FLOOR);
             totalRms += 1;
 
-            Pos endOpen = RmToConnect.randomOpeningGenerator(direction, RANDOM, world);
-            OpenRm.put(RmToConnect, endOpen);
-            openFringe.add(endOpen);
-
-            Pos startOpen= OpenRm.get(currRm);
 
 
+            Pos[] openPos = currRm.connectHelper(RmToConnect, RANDOM);
 
-            World.connect(world, startOpen, endOpen);
+            ///when two rooms overlap, dont connect them, just move on!
+            if (openPos[0] != null) {
+                Pos startOpen = openPos[0];
+                Pos endOpen = openPos[1];
+                if (totalRms == 2) {
+                    openFringe.add(startOpen);
+                }
+                openFringe.add(endOpen);
+                PosToRm.put(startOpen, currRm);
+                PosToRm.put(endOpen, RmToConnect);
+
+                World.connect(world, startOpen, endOpen, currRm);
+            }
 
             currRm = RmToConnect;
-
         }
 
 
     }
 
-    public static TETile[][] connect(TETile[][] world, Pos start, Pos end){
+    public static TETile[][] connect(TETile[][] world, Pos start, Pos end, Room r){
 
         int startX = start.x;
         int startY = start.y;
@@ -91,18 +129,13 @@ public class World {
         } else if (startX == endX){
             Hallway.drawVer(world, Tileset.FLOOR, hall);
         } else{
-            Pos turningPt = hall.turningPos(start, end);
+            Pos turningPt = hall.turningPos(start, end, r);
             Hallway.drawL(world, Tileset.FLOOR, turningPt, hall);
         }
 
         return world;
 
-
     }
-
-
-
-
 
 
     public static void main(String[] args) {

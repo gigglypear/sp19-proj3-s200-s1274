@@ -130,9 +130,9 @@ public class Hallway implements Spaces {
      * WARNING: Make sure this works for other cases
      * @return
      */
-    public static Pos turningPos(Pos start, Pos end){
+    public static Pos turningPos(Pos start, Pos end, Room r){
         Pos turningPt;
-        if(start.x < end.x){
+        if(start.y == r.getStartP().y || start.y == r.getEndP().y){
             turningPt = new Pos(start.x, end.y);
         } else{
             turningPt = new Pos(end.x, start.y);
