@@ -13,12 +13,10 @@ public class Hallway implements Spaces {
         endP = end;
     }
 
-
     /**
      * This methods generate a vertical hallway
      * start and end position are openings of the hallways and will be assigned with a floor tile
      */
-
     public static void drawVer(TETile[][] world, TETile t, Hallway h) {
 
         Pos start = h.startP;
@@ -37,9 +35,12 @@ public class Hallway implements Spaces {
             world[start.x - 1][i] = Tileset.WALL;
             world[start.x][i] = t;
             world[start.x + 1][i] = Tileset.WALL;
+
+
         }
 
-        world[end.x][end.y] = Tileset.WALL;
+
+        world[end.x][end.y] = Tileset.FLOWER;
 
     }
 
@@ -65,29 +66,26 @@ public class Hallway implements Spaces {
         }
 
         for (int i = s; i < e + 1; i++) {
+
             world[i][start.y - 1] = Tileset.WALL;
             world[i][start.y] = t;
             world[i][start.y + 1] = Tileset.WALL;
         }
 
-        world[end.x][end.y] = Tileset.WALL;
+        world[end.x][end.y] = Tileset.FLOWER;
+
+
 
     }
+
 
     /**
-     * Still in progress, probably don't need?
+     * Generates L shaped hallways
      * @param world
-     * @param start
-     * @param end
      * @param t
-     * @return
+     * @param turningPt -- Position where hallway makes turn
+     * @param h
      */
-    public static TETile[][] drawCorner(TETile[][] world, Pos start, Pos end, TETile t) {
-
-
-        return world;
-    }
-
     public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h){
         Pos start = h.startP;
         Pos end = h.endP;
@@ -125,17 +123,26 @@ public class Hallway implements Spaces {
 
     }
 
+    /**
+     * Calculates the turning point for an L shaped hall
+     * @param start -- start Position
+     * @param end -- end Position
+     * WARNING: Make sure this works for other cases
+     * @return
+     */
+    public static Pos turningPos(Pos start, Pos end){
+        Pos turningPt;
+        if(start.x < end.x){
+            turningPt = new Pos(start.x, end.y);
+        } else{
+            turningPt = new Pos(end.x, start.y);
+        }
+        System.out.println("turning pt " + turningPt.x + ", " + turningPt.y);
+        return turningPt;
 
-
-    @Override
-    public boolean isConnected() {
-        return false;
     }
 
-    @Override
-    public TETile[][] size() {
-        return new TETile[0][];
-    }
+
 
 
     public  TETile[][] Open(TETile[][] world, Pos p, TETile t) {

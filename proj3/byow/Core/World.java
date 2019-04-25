@@ -1,0 +1,129 @@
+package byow.Core;
+
+import byow.TileEngine.TERenderer;
+import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+public class World {
+
+    private static final int WIDTH = 80;
+    private static final int HEIGHT = 40;
+    private static final long SEED = 445;//939;
+    private static final Random RANDOM = new Random(SEED);
+
+    private List<Room> allRooms;
+    private HashMap<Room, Pos> OpenRm;
+    private List<Pos> openFringe;
+
+    private int totalRms;
+
+    public World() {
+        allRooms = new ArrayList<>();
+        OpenRm = new HashMap<>();
+        openFringe = new ArrayList<>();
+        totalRms = 0;
+    }
+
+    public void generateWorld(TETile[][] world){
+
+
+        /**
+         * Generalization for method
+         */
+        int direction = RandomUtils.uniform(RANDOM, 3);
+
+        Room initRm = Room.roomGenerator(world, RANDOM);
+        initRm.draw(world, Tileset.FLOOR);
+        totalRms += 1;
+
+        Pos open1 = initRm.randomOpeningGenerator(direction, RANDOM, world);
+        OpenRm.put(initRm, open1);
+        openFringe.add(open1);
+
+
+//        int maxRms = RandomUtils.uniform(RANDOM, 3, 16);
+        int maxRms = 4; /**hard code for now; CHANGE*/
+        Room currRm = initRm;
+
+        while(maxRms != totalRms + 1){
+            Room RmToConnect = Room.roomGenerator(world, RANDOM);
+            RmToConnect.draw(world, Tileset.FLOOR);
+            totalRms += 1;
+
+            Pos endOpen = RmToConnect.randomOpeningGenerator(direction, RANDOM, world);
+            OpenRm.put(RmToConnect, endOpen);
+            openFringe.add(endOpen);
+
+            Pos startOpen= OpenRm.get(currRm);
+
+
+
+            World.connect(world, startOpen, endOpen);
+
+            currRm = RmToConnect;
+
+        }
+
+
+    }
+
+    public static TETile[][] connect(TETile[][] world, Pos start, Pos end){
+
+        int startX = start.x;
+        int startY = start.y;
+        int endX = end.x;
+        int endY = end.y;
+
+        Hallway hall = new Hallway(start, end);
+
+        /**
+         * if starting y and ending y same --> draw VERTICAL hall
+         * if starting x and ending x same --> draw HORIZONTAL hall
+         * else draw L hallway
+         */
+        if(startY == endY){
+            Hallway.drawHor(world, Tileset.FLOOR, hall);
+        } else if (startX == endX){
+            Hallway.drawVer(world, Tileset.FLOOR, hall);
+        } else{
+            Pos turningPt = hall.turningPos(start, end);
+            Hallway.drawL(world, Tileset.FLOOR, turningPt, hall);
+        }
+
+        return world;
+
+
+    }
+
+
+
+
+
+
+    public static void main(String[] args) {
+        // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+
+        // initialize tiles
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+
+        World wholeWorld = new World();
+
+        wholeWorld.generateWorld(world);
+
+
+        ter.renderFrame(world);
+
+    }
+}
