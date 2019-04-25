@@ -15,9 +15,9 @@ public interface Spaces {
 //    TETile[][] Close(TETile[][] world, Pos p);
 
 
-    boolean isConnected();
+//    boolean isConnected();
 
     ///do we need it??????
-    TETile[][] size();
+//    TETile[][] size();
 
 }
