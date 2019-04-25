@@ -89,9 +89,11 @@ public class SimpleTest {
 
 
 
-        Hallway h = new Hallway(new Pos(16, 15), new Pos(10, 19));
-        Hallway.drawL(world, Tileset.FLOOR, new Pos(16, 19), h);
+        Hallway h = new Hallway(new Pos(13, 15), new Pos(10, 16));
+        Hallway.drawL(world, Tileset.FLOOR, new Pos(13, 16), h);
 
+        String[] result = room1.connectDirection(room2);
+        System.out.print(result[0] + " " + result[1]);
 
         ter.renderFrame(world);
     }

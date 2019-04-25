@@ -15,6 +15,7 @@ public class Room implements Spaces {
 //    private int height;
     private Pos startP;
     private Pos endP;
+    private Pos centerP;
 
     private boolean connected;
 
@@ -24,8 +25,8 @@ public class Room implements Spaces {
     public Room(Pos start, Pos end) {
         startP = start;
         endP = end;
+        centerP = new Pos((start.x + end.x) / 2, (start.y + end.y) / 2);
         connected = false;
-        openings = new Pos[4];
     }
 
 
@@ -165,6 +166,123 @@ public class Room implements Spaces {
 //        potentialRm.overlap(rooms);
 //
 //    }
+
+    /***
+     *
+     * @param r
+     * @return
+     */
+
+    protected String[] connectDirection(Room r) {
+        String[] result = new String[2];
+        //northeast region
+        if (this.centerP.x <= r.centerP.x && this.centerP.y <= r.centerP.y) {
+            if (this.endP.x - r.startP.x >= 3) {
+                result[1] = "north";
+                result[0] = "straight";
+            } else if (this.endP.y - r.startP.y >= 3) {
+                result[1] = "east";
+                result[0] = "straight";
+            } else {
+                result[1] = "northeast";
+                result[0] = "L";
+            }
+            //northwest region
+        } else if (this.centerP.x >= r.centerP.x && this.centerP.y <= r.centerP.y) {
+            if (r.endP.x - this.startP.x >= 3) {
+                result[1] = "north";
+                result[0] = "straight";
+            } else if (this.endP.y - r.startP.y >= 3) {
+                result[1] = "west";
+                result[0] = "straight";
+            } else {
+                result[1] = "northwest";
+                result[0] = "L";
+            }
+            //southeast region
+        } else if (this.centerP.x <= r.centerP.x && this.centerP.y >= r.centerP.y) {
+            if (this.endP.x - r.startP.x >= 3) {
+                result[1] = "south";
+                result[0] = "straight";
+            } else if (r.endP.y - this.startP.y >= 3) {
+                result[1] = "east";
+                result[0] = "straight";
+            } else {
+                result[1] = "southeast";
+                result[0] = "L";
+            }
+        } else {
+            if (r.endP.x - this.startP.x >= 3) {
+                result[1] = "south";
+                result[0] = "straight";
+            } else if (r.endP.y - this.startP.y >= 3) {
+                result[1] = "west";
+                result[0] = "straight";
+            } else {
+                result[1] = "southwest";
+                result[0] = "L";
+            }
+        }
+        return result;
+    }
+
+    protected Pos[] randomOpeningGenerator(Room r, String[] notes, Random rand) {
+        String dir = notes[0];
+        String hallType = notes[1];
+
+        Pos s = new Pos(0,0);
+        Pos e = new Pos(0,0);
+
+        if (dir == "north" || dir == "south") {
+            if (this.endP.x - r.startP.x >= 3) {
+
+            }
+
+        }
+
+
+
+    }
+
+
+
+
+//        if (this.endP.y < r.startP.y) {
+//            if ((this.endP.x - r.startP.x >= 3) || (r.endP.x - this.startP.x >= 3)) {
+//                result[1] = "north";
+//                result[0] = "straight";
+//            }
+//        } else if (this.startP.y > r.endP.y) {
+//            if ((this.endP.x - r.startP.x >= 3) || (r.endP.x - this.startP.x >= 3)) {
+//                result[1] = "south";
+//                result[0] = "straight";
+//            }
+//        } else if (this.endP.x < r.startP.x) {
+//            if ((this.endP.y - r.startP.y >= 3) || (r.endP.y - this.startP.y >= 3)) {
+//                result[1] = "east";
+//                result[0] = "straight";
+//            }
+//        } else if (this.startP.x > r.endP.x) {
+//            if ((this.endP.y - r.startP.y >= 3) || (r.endP.y - this.startP.y >= 3)) {
+//                result[1] = "west";
+//                result[0] = "straight";
+//            }
+//
+//
+//
+//        } else {
+//            result[0] = "L";
+//            if (this.endP.y < r.endP.y) {
+//                result[1] = "north";
+//            } else {
+//                result[1] = "south";
+//            }
+//            if (this.endP.x < r.endP.x) {
+//                result[1] += "east";
+//            } else {
+//                result[1] += "west";
+//            }
+//        }
 
 
 
