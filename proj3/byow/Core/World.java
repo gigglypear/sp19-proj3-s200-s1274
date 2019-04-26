@@ -32,7 +32,7 @@ public class World {
         overlapTries = 0;
     }
 
-    public void generateWorld(TETile[][] world){
+    public TETile[][] generateWorld(TETile[][] world){
 
 
         /**
@@ -90,6 +90,8 @@ public class World {
                 TileSelect.drawWalls(world, x, y);
             }
         }
+
+        return world;
 
 
     }
