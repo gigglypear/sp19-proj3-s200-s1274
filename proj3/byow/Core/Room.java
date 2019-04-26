@@ -3,16 +3,13 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class Room implements Spaces {
+public class Room {
 
     private int totalRms;
 
-    private Room Rm;
     private Pos startP;
     private Pos endP;
     private int x;
@@ -30,9 +27,10 @@ public class Room implements Spaces {
 
     /**
      * Room object constructor
+     *
      * @param start -- takes a Pos (x,y) value as starting position
-     * @param w -- width of OVERALL room (includes walls)
-     * @param h -- height of OVERALL room(includes walls)
+     * @param w     -- width of OVERALL room (includes walls)
+     * @param h     -- height of OVERALL room(includes walls)
      */
     public Room(Pos start, int w, int h) {
 
@@ -49,8 +47,7 @@ public class Room implements Spaces {
     }
 
 
-
-    public static int numRoomsGenerator(TETile[][] world, Random seed){
+    public static int numRoomsGenerator(TETile[][] world, Random seed) {
         int totalRms = RandomUtils.uniform(seed, 3, 20);
 //        for(int i = 0; i <= totalRms; i+= 1){
 //            return roomGenerator(world, seed);
@@ -73,8 +70,8 @@ public class Room implements Spaces {
      */
     public static Room roomGenerator(TETile[][] world, Random seed) {
 
-        int startX = RandomUtils.uniform(seed ,3, world.length - 18);
-        int startY = RandomUtils.uniform(seed,  3, world[0].length - 18);
+        int startX = RandomUtils.uniform(seed, 3, world.length - 18);
+        int startY = RandomUtils.uniform(seed, 3, world[0].length - 18);
 
         int height = RandomUtils.uniform(seed, 4, 15);
         int width = RandomUtils.uniform(seed, 4, 15);
@@ -95,6 +92,7 @@ public class Room implements Spaces {
      * Drawing the room where the room is closed off (no openings)
      * width and height of the rooms include the walls ==> floor space
      * witdth = width - 2 and height = height - 2 to account for walls
+     *
      * @param world
      * @param t
      */
@@ -103,22 +101,22 @@ public class Room implements Spaces {
         /**
          * Original way DOES NOT account for overlapping
          */
-        int width = this.width;
-        int height = this.height;
+        int w = this.width;
+        int h = this.height;
         int startX = this.x;
         int startY = this.y;
 
-        int endX = this.x + width;
-        int endY = this.y + height;
+        int endX = this.x + w;
+        int endY = this.y + h;
 
 
-        //Create the left and right walls
-        for(int i = startY; i < endY + 1; i++) {
-//            world[startX][i] = Tileset.WALL;
-//            world[endX][i] = Tileset.WALL;
-        }
+//        //Create the left and right walls
+//        for (int i = startY; i < endY + 1; i++) {
+////            world[startX][i] = Tileset.WALL;
+////            world[endX][i] = Tileset.WALL;
+//        }
 
-        for(int j = startX + 1; j < endX; j++) {
+        for (int j = startX + 1; j < endX; j++) {
             //create the first entry as wall
 //            world[j][startY] = Tileset.WALL;
 
@@ -165,9 +163,9 @@ public class Room implements Spaces {
 
     /**
      * @param direction -- Given a randomly selected direction (0 = north)
-     * @param r -- of class Random generated from the seed; used to get
-     *          a random x/y value for the tile you want to open on the side of the
-     *          given direction
+     * @param r         -- of class Random generated from the seed; used to get
+     *                  a random x/y value for the tile you want to open on the side of the
+     *                  given direction
      * @param world
      */
 //    public void randomOpeningGenerator(int direction, Random r, TETile[][] world) {
@@ -199,10 +197,9 @@ public class Room implements Spaces {
 //        this.open(world, p, Tileset.FLOOR);
 //
 //    }
-
     public Pos randomOpeningGenerator(int direction, Random r, TETile[][] world) {
-        int x;
-        int y;
+        int posx;
+        int posy;
         int north = 0;
         int east = 1;
         int south = 2;
@@ -211,20 +208,20 @@ public class Room implements Spaces {
         //Randomly selecting an x/y value on a given side and making sure it's not
         //the corners of the walls
         if (direction == north) { // 0 = north
-            x = r.nextInt(endP.x - startP.x - 2) + this.startP.x + 1;
-            y = endP.y;
-        } else if(direction == east) { // 1 = east
-            x = endP.x;
-            y = r.nextInt(endP.y - startP.y - 2) + this.startP.y + 1;
+            posx = r.nextInt(endP.x - startP.x - 2) + this.startP.x + 1;
+            posy = endP.y;
+        } else if (direction == east) { // 1 = east
+            posx = endP.x;
+            posy = r.nextInt(endP.y - startP.y - 2) + this.startP.y + 1;
         } else if (direction == south) { // 2 = south
-            x = r.nextInt(endP.x - startP.x - 2) + this.startP.x + 1;
-            y = startP.y;
+            posx = r.nextInt(endP.x - startP.x - 2) + this.startP.x + 1;
+            posy = startP.y;
         } else { // 3 = west
-            x = startP.x;
-            y = r.nextInt(endP.y - startP.y - 2) + this.startP.y + 1;
+            posx = startP.x;
+            posy = r.nextInt(endP.y - startP.y - 2) + this.startP.y + 1;
         }
 
-        Pos p = new Pos(x, y);
+        Pos p = new Pos(posx, posy);
         openings[direction] = p;
         this.open(world, p, Tileset.FLOOR);
         return p;
@@ -233,15 +230,15 @@ public class Room implements Spaces {
 
     /**
      * Opens tiles
+     *
      * @param world
-     * @param p -- position of tile you want to open
+     * @param p     -- position of tile you want to open
      * @param t
      */
     public void open(TETile[][] world, Pos p, TETile t) {
         world[p.x][p.y] = t;
 
     }
-
 
 
 //    /**
@@ -264,9 +261,9 @@ public class Room implements Spaces {
 //    }
 
     public boolean overlap(List<Room> allRooms) {
-        for(Room r : allRooms){
+        for (Room r : allRooms) {
             if (this.startP.x <= r.endP.x && this.endP.x >= r.startP.x
-                    && this.startP.y <= r.endP.y && this.endP.y >= r.startP.y){
+                    && this.startP.y <= r.endP.y && this.endP.y >= r.startP.y) {
                 return true;
             }
         }
@@ -280,8 +277,6 @@ public class Room implements Spaces {
     public Pos getEndP() {
         return endP;
     }
-
-
 
 
 }

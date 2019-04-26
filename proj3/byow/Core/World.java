@@ -3,7 +3,6 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-import byow.lab12.HexWorld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ public class World {
     private Random RANDOM;
 
     private List<Room> allRooms;
-    private HashMap<Room, Pos> OpenRm;
+    private HashMap<Room, Pos> openRm;
     private List<Pos> openFringe;
 
     private int totalRms;
@@ -29,7 +28,7 @@ public class World {
 
     public World(long seed) {
         allRooms = new ArrayList<>();
-        OpenRm = new HashMap<>();
+        openRm = new HashMap<>();
         openFringe = new ArrayList<>();
         totalRms = 0;
         overlapTries = 0;
@@ -37,7 +36,7 @@ public class World {
         RANDOM = new Random(SEED);
     }
 
-    public TETile[][] generateWorld(TETile[][] world){
+    public TETile[][] generateWorld(TETile[][] world) {
 
 
         /**
@@ -51,7 +50,7 @@ public class World {
         totalRms += 1;
 
         Pos open1 = initRm.randomOpeningGenerator(direction, RANDOM, world);
-        OpenRm.put(initRm, open1);
+        openRm.put(initRm, open1);
         openFringe.add(open1);
 
 
@@ -59,39 +58,37 @@ public class World {
 //        int maxRms = 6; /**hard code for now; CHANGE*/
         Room currRm = initRm;
 
-        while(maxRms != totalRms + 1){
-            Room RmToConnect = Room.roomGenerator(world, RANDOM);
+        while (maxRms != totalRms + 1) {
+            Room rmToConnect = Room.roomGenerator(world, RANDOM);
 
-            while(RmToConnect.overlap(allRooms) && overlapTries < 6){
-                RmToConnect = Room.roomGenerator(world, RANDOM);
+            while (rmToConnect.overlap(allRooms) && overlapTries < 6) {
+                rmToConnect = Room.roomGenerator(world, RANDOM);
                 overlapTries += 1;
             }
 
 
 //            Room RmToConnect = Room.roomGenerator(world, RANDOM);
 
-            RmToConnect.draw(world, Tileset.FLOOR);
-            allRooms.add(RmToConnect);
+            rmToConnect.draw(world, Tileset.FLOOR);
+            allRooms.add(rmToConnect);
             totalRms += 1;
 
-            Pos endOpen = RmToConnect.randomOpeningGenerator(direction, RANDOM, world);
-            OpenRm.put(RmToConnect, endOpen);
+            Pos endOpen = rmToConnect.randomOpeningGenerator(direction, RANDOM, world);
+            openRm.put(rmToConnect, endOpen);
             openFringe.add(endOpen);
 
-            Pos startOpen= OpenRm.get(currRm);
-
+            Pos startOpen = openRm.get(currRm);
 
 
             World.connect(world, startOpen, endOpen, currRm);
 
-            currRm = RmToConnect;
+            currRm = rmToConnect;
 
         }
 
 
-
-        for(int x = 3; x < WIDTH - 1; x += 1){
-            for(int y = 3; y < HEIGHT - 1; y +=1){
+        for (int x = 3; x < WIDTH - 1; x += 1) {
+            for (int y = 3; y < HEIGHT - 1; y += 1) {
                 TileSelect.drawWalls(world, x, y);
             }
         }
@@ -101,7 +98,7 @@ public class World {
 
     }
 
-    public static TETile[][] connect(TETile[][] world, Pos start, Pos end, Room room){
+    public static TETile[][] connect(TETile[][] world, Pos start, Pos end, Room room) {
 
         int startX = start.x;
         int startY = start.y;
@@ -115,11 +112,11 @@ public class World {
          * if starting x and ending x same --> draw HORIZONTAL hall
          * else draw L hallway
          */
-        if(startY == endY){
+        if (startY == endY) {
             Hallway.drawHor(world, Tileset.FLOOR, hall);
-        } else if (startX == endX){
+        } else if (startX == endX) {
             Hallway.drawVer(world, Tileset.FLOOR, hall);
-        } else{
+        } else {
             Pos turningPt = hall.turningPos(start, end, room);
             Hallway.drawL(world, Tileset.FLOOR, turningPt, hall);
         }
@@ -128,11 +125,6 @@ public class World {
 
 
     }
-
-
-
-
-
 
 
     public static void main(String[] args) {

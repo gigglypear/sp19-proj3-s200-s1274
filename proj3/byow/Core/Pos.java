@@ -3,17 +3,17 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-/**protected class ????
- *
+/**
+ * protected class ????
  */
 public class Pos {
 
-    public int x;
-    public int y;
+    protected int x;
+    protected int y;
 
-    public Pos(int Posx, int Posy) {
-        x = Posx;
-        y = Posy;
+    public Pos(int posx, int posy) {
+        x = posx;
+        y = posy;
     }
 
     public boolean validatePos(Pos bound, String type, TETile[][] world) {

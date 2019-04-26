@@ -1,14 +1,13 @@
 package byow.Core;
 
 import byow.TileEngine.TETile;
-import byow.TileEngine.Tileset;
 
-public class Hallway implements Spaces {
+public class Hallway {
 
     private Pos startP;
     private Pos endP;
 
-    public Hallway(Pos start, Pos end){
+    public Hallway(Pos start, Pos end) {
         startP = start;
         endP = end;
     }
@@ -44,6 +43,7 @@ public class Hallway implements Spaces {
 
     /**
      * Generate a hallway where the start is an opening and the ending is closed
+     *
      * @param world
      * @param t
      * @return
@@ -74,38 +74,31 @@ public class Hallway implements Spaces {
 //        world[end.x][end.y] = TileSelect.checkNeighbors(world, end.x, end.y, t);
 
 
-
     }
 
 
     /**
      * Generates L shaped hallways
+     *
      * @param world
      * @param t
      * @param turningPt -- Position where hallway makes turn
      * @param h
      */
-    public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h){
+    public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h) {
         Pos start = h.startP;
         Pos end = h.endP;
         TETile type;
 
         //case where we draw a vertical hallway first
-        if(start.x == turningPt.x){
+        if (start.x == turningPt.x) {
             // case where vertical hallway go up
             if (start.y < turningPt.y) {
-                drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y + 1)));
-
-//                type = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y+1, Tileset.WALL);
-//                world[turningPt.x][turningPt.y+1] = type;
-//                world[turningPt.x][turningPt.y+1] = Tileset.FLOWER;
+                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y + 1)));
 
             } else { // case where vertical hallway go down
-                drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y - 1)));
+                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y - 1)));
 
-//                type = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y-1, Tileset.WALL);
-//                world[turningPt.x][turningPt.y-1] = type;
-//                world[turningPt.x][turningPt.y-1] = Tileset.FLOWER;
             }
             // draw horizontal hallway, case where horizontal go right
             if (turningPt.x < end.x) {
@@ -116,18 +109,11 @@ public class Hallway implements Spaces {
         } else { // case where we draw a horizontal hallway first
             // case where horizontal hallway go right
             if (start.x < turningPt.x) {
-                drawHor(world, t, new Hallway(start, new Pos (turningPt.x + 1, turningPt.y)));
-
-//                type = TileSelect.checkNeighbors(world, turningPt.x + 1,turningPt.y, Tileset.WALL);
-//                world[turningPt.x + 1][turningPt.y] = type;
-//                world[turningPt.x + 1][turningPt.y] = Tileset.FLOWER;
+                drawHor(world, t, new Hallway(start, new Pos(turningPt.x + 1, turningPt.y)));
 
             } else { // case where horizontal hallway go left
-                drawHor(world, t, new Hallway(start, new Pos (turningPt.x - 1, turningPt.y)));
+                drawHor(world, t, new Hallway(start, new Pos(turningPt.x - 1, turningPt.y)));
 
-//                type = TileSelect.checkNeighbors(world, turningPt.x - 1,turningPt.y, Tileset.WALL);
-//                world[turningPt.x - 1][turningPt.y] = type;
-//                world[turningPt.x - 1][turningPt.y] = Tileset.FLOWER;
             }
             // draw vertical hallway, case where vertical go up
             if (turningPt.y < end.y) {
@@ -144,9 +130,10 @@ public class Hallway implements Spaces {
 
     /**
      * Calculates the turning point for an L shaped hall
+     *
      * @param start -- start Position
-     * @param end -- end Position
-     * WARNING: Make sure this works for other cases
+     * @param end   -- end Position
+     *              WARNING: Make sure this works for other cases
      * @return
      */
 //    public static Pos turningPos(Pos start, Pos end){
@@ -160,11 +147,11 @@ public class Hallway implements Spaces {
 //        return turningPt;
 //
 //    }
-    public static Pos turningPos(Pos start, Pos end, Room r){
+    public static Pos turningPos(Pos start, Pos end, Room r) {
         Pos turningPt;
-        if(start.y == r.getStartP().y || start.y == r.getEndP().y){
+        if (start.y == r.getStartP().y || start.y == r.getEndP().y) {
             turningPt = new Pos(start.x, end.y);
-        } else{
+        } else {
             turningPt = new Pos(end.x, start.y);
         }
 //        System.out.println("turning pt " + turningPt.x + ", " + turningPt.y);
@@ -172,17 +159,4 @@ public class Hallway implements Spaces {
 
     }
 
-
-
-
-    public  TETile[][] Open(TETile[][] world, Pos p, TETile t) {
-        world[p.x][p.y] = t;
-        return world;
-    }
-
-
-    public  TETile[][] Close(TETile[][] world, Pos p) {
-        world[p.x][p.y] = Tileset.WALL;
-        return world;
-    }
 }
