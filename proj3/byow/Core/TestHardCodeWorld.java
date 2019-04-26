@@ -56,16 +56,16 @@ public class TestHardCodeWorld {
         /**
          * Tests connection of 2 rooms with VERTICAL hallways
          */
-        Pos start2 = new Pos(0, 0);
-        Room room2 = new Room(start2, 5, 5);
-        room2.draw(world, Tileset.FLOOR);
-
-        Pos start3 = new Pos(0, 10);
-        Room room3 = new Room(start3, 5, 5);
-        room3.draw(world, Tileset.FLOOR);
-
-        Hallway hall13 = new Hallway(new Pos(1, 5), new Pos(1, 10));
-        Hallway.drawVer(world, Tileset.FLOOR, hall13);
+//        Pos start2 = new Pos(0, 0);
+//        Room room2 = new Room(start2, 5, 5);
+//        room2.draw(world, Tileset.FLOOR);
+//
+//        Pos start3 = new Pos(0, 10);
+//        Room room3 = new Room(start3, 5, 5);
+//        room3.draw(world, Tileset.FLOOR);
+//
+//        Hallway hall13 = new Hallway(new Pos(1, 5), new Pos(1, 10));
+//        Hallway.drawVer(world, Tileset.FLOOR, hall13);
 
         /**
          * Tests connection of two rooms with TURNING hallway
@@ -161,13 +161,20 @@ public class TestHardCodeWorld {
         /**
          * Tests connection of two rooms with TURNING hallway
          */
-//        Pos start2 = new Pos(0, 0);
-//        Room room2 = new Room(start2, 5, 5);
-//        room2.draw(world, Tileset.FLOOR);
-//
-//        Pos start3 = new Pos(10, 10);
-//        Room room3 = new Room(start3, 6, 5);
-//        room3.draw(world, Tileset.FLOOR);
+        Pos start2 = new Pos(0, 0);
+        Room room2 = new Room(start2, 5, 5);
+        room2.draw(world, Tileset.FLOOR);
+
+        Pos start3 = new Pos(10, 10);
+        Room room3 = new Room(start3, 6, 5);
+        room3.draw(world, Tileset.FLOOR);
+
+        //Room that OVERLAPS where the TURNING POINT falls in the room
+        Pos start4 = new Pos(9, 0);
+        Room room4 = new Room(start4, 10, 6);
+        room4.draw(world, Tileset.FLOOR);
+
+        World.connect(world, new Pos(1, 5), new Pos(10, 11), room3);
 //
 //        Hallway hall13 = new Hallway(new Pos(1, 5), new Pos(10, 11));
 //
@@ -176,6 +183,18 @@ public class TestHardCodeWorld {
 //        //should get new Pos(1, 11)
 //
 //        Hallway.drawL(world, Tileset.FLOOR, turningPt,hall13);
+
+        /**
+         * Two rooms that OVERLAP
+         */
+//        Pos start2 = new Pos(5, 5);
+//        Room room2 = new Room(start2, 10, 10);
+//        room2.draw(world, Tileset.FLOOR);
+//
+//        Pos start3 = new Pos(7, 7);
+//        Room room3 = new Room(start3, 10, 12);
+//        room3.draw(world, Tileset.FLOOR);
+
 
 
         /**

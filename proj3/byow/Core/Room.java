@@ -111,6 +111,9 @@ public class Room implements Spaces {
      */
     public void draw(TETile[][] world, TETile t) {
 
+        /**
+         * Original drawing of room that DOES NOT ACCOUNT FOR OVERLAP
+         */
         int width = this.width;
         int height = this.height;
         int startX = this.x;
@@ -138,6 +141,39 @@ public class Room implements Spaces {
             //create last entry as wall
             world[j][endY] = Tileset.WALL;
         }
+
+        /**
+         * Accounts for overlap, but will open automatically
+         * even if the neighbors are nothing
+         */
+//        int width = this.width;
+//        int height = this.height;
+//        int startX = this.x;
+//        int startY = this.y;
+//
+//        int endX = this.x + width;
+//        int endY = this.y + height;
+//
+//
+//        //Create the left and right walls
+//        for(int i = startY; i < endY + 1; i++) {
+//            world[startX][i] = TileSelect.tileType(world, startX, i, t);
+//            world[endX][i] = TileSelect.tileType(world, endX, i, t);;
+//        }
+//
+//        for(int j = startX + 1; j < endX; j++) {
+//            //create the first entry as wall
+//            world[j][startY] = TileSelect.tileType(world, j, startY, t);
+//
+//            //create 2nd to 1 before last as floors
+//            for (int k = startY + 1; k < endY; k++) {
+//                world[j][k] = t;
+//            }
+//
+//            //create last entry as wall
+//            world[j][endY] = TileSelect.tileType(world, j, endY, t);
+//        }
+
 
 
     }

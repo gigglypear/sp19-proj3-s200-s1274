@@ -14,7 +14,7 @@ public class World {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 40;
-    private static final long SEED = 445;//939;
+    private static final long SEED = 12345;//445; 12345 -- not all rooms connected with this seed
     private static final Random RANDOM = new Random(SEED);
 
     private List<Room> allRooms;
@@ -79,7 +79,9 @@ public class World {
         currRm.draw(world, Tileset.FLOOR);
 
         totalRms += 1;
-        int maxRms = 8; /**hard code for now; CHANGE*/
+
+//        int maxRms = RandomUtils.uniform(RANDOM, 5, 8); //can add more rooms once it works
+        int maxRms = 4; /**hard code for now; CHANGE*/
 
         while(maxRms != totalRms) {
             Room RmToConnect = Room.roomGenerator(world, RANDOM);
@@ -106,6 +108,15 @@ public class World {
 
             currRm = RmToConnect;
         }
+
+        for(Pos opening: openFringe){
+            int x = opening.x;
+            int y = opening.y;
+
+            world[x][y] = TileSelect.checkNeighbors(world, x, y, Tileset.WALL);
+        }
+
+
 
 
     }

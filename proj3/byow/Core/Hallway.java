@@ -38,7 +38,7 @@ public class Hallway implements Spaces {
         }
 
 
-        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
+//        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
 
     }
 
@@ -71,9 +71,7 @@ public class Hallway implements Spaces {
 
         }
 
-        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
-
-
+//        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
 
     }
 
@@ -95,9 +93,11 @@ public class Hallway implements Spaces {
             if (start.y < turningPt.y) {
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y + 1)));
                 world[turningPt.x][turningPt.y+1] = Tileset.WALL;
+                world[turningPt.x][turningPt.y+1] = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y+1, Tileset.WALL);
             } else { // case where vertical hallway go down
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y - 1)));
                 world[turningPt.x][turningPt.y-1] = Tileset.WALL;
+//                world[turningPt.x][turningPt.y-1] = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y-1, Tileset.WALL);;
             }
             // draw horizontal hallway, case where horizontal go right
             if (turningPt.x < end.x) {
@@ -110,9 +110,11 @@ public class Hallway implements Spaces {
             if (start.x < turningPt.x) {
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x + 1, turningPt.y)));
                 world[turningPt.x + 1][turningPt.y] = Tileset.WALL;
+//                world[turningPt.x + 1][turningPt.y] = TileSelect.checkNeighbors(world, turningPt.x + 1,turningPt.y, Tileset.WALL);
             } else { // case where horizontal hallway go left
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x - 1, turningPt.y)));
                 world[turningPt.x - 1][turningPt.y] = Tileset.WALL;
+//                world[turningPt.x - 1][turningPt.y] = TileSelect.checkNeighbors(world, turningPt.x -1,turningPt.y, Tileset.WALL);
             }
             // draw vertical hallway, case where vertical go up
             if (turningPt.y < end.y) {

@@ -28,4 +28,28 @@ public class TileSelect {
         return type;
     }
 
+    public static TETile checkNeighbors(TETile[][] world, int x, int y, TETile t){
+
+        TETile type;
+        TETile currTile = world[x][y];
+
+        TETile northN = world[x+1][y];
+        TETile southN = world[x-1][y];
+        TETile eastN = world[x][y+1];
+        TETile westN = world[x][y-1];
+
+        if(northN != Tileset.NOTHING && southN != Tileset.NOTHING &&
+                eastN != Tileset.NOTHING && westN != Tileset.NOTHING){
+            type = t;
+        }else if(northN != Tileset.NOTHING && southN != Tileset.NOTHING ||
+                eastN != Tileset.NOTHING && westN != Tileset.NOTHING){
+            type = Tileset.WALL;
+        } else{
+            type = t;
+        }
+
+        return type;
+
+    }
+
 }
