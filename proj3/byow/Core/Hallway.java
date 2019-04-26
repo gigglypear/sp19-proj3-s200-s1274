@@ -32,13 +32,13 @@ public class Hallway implements Spaces {
             s = end.y;
         }
         for (int i = s; i < e + 1; i++) {
-            world[start.x - 1][i] = TileSelect.tileType(world, start.x - 1, i, t);
+            world[start.x - 1][i] = Tileset.WALL;
             world[start.x][i] = t;
-            world[start.x + 1][i] = TileSelect.tileType(world, start.x + 1, i, t);
+            world[start.x + 1][i] = Tileset.WALL;
         }
 
 
-//        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
+        world[end.x][end.y] = Tileset.WALL;
 
     }
 
@@ -65,13 +65,13 @@ public class Hallway implements Spaces {
 
         for (int i = s; i < e + 1; i++) {
 
-            world[i][start.y - 1] = TileSelect.tileType(world, i, start.y - 1, t);
+            world[i][start.y - 1] = Tileset.WALL;
             world[i][start.y] = t;
-            world[i][start.y + 1] = TileSelect.tileType(world, i, start.y + 1, t);
+            world[i][start.y + 1] = Tileset.WALL;
 
         }
 
-//        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
+        world[end.x][end.y] = Tileset.WALL;
 
     }
 
@@ -93,11 +93,9 @@ public class Hallway implements Spaces {
             if (start.y < turningPt.y) {
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y + 1)));
                 world[turningPt.x][turningPt.y+1] = Tileset.WALL;
-                world[turningPt.x][turningPt.y+1] = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y+1, Tileset.WALL);
             } else { // case where vertical hallway go down
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y - 1)));
                 world[turningPt.x][turningPt.y-1] = Tileset.WALL;
-//                world[turningPt.x][turningPt.y-1] = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y-1, Tileset.WALL);;
             }
             // draw horizontal hallway, case where horizontal go right
             if (turningPt.x < end.x) {
@@ -110,11 +108,9 @@ public class Hallway implements Spaces {
             if (start.x < turningPt.x) {
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x + 1, turningPt.y)));
                 world[turningPt.x + 1][turningPt.y] = Tileset.WALL;
-//                world[turningPt.x + 1][turningPt.y] = TileSelect.checkNeighbors(world, turningPt.x + 1,turningPt.y, Tileset.WALL);
             } else { // case where horizontal hallway go left
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x - 1, turningPt.y)));
                 world[turningPt.x - 1][turningPt.y] = Tileset.WALL;
-//                world[turningPt.x - 1][turningPt.y] = TileSelect.checkNeighbors(world, turningPt.x -1,turningPt.y, Tileset.WALL);
             }
             // draw vertical hallway, case where vertical go up
             if (turningPt.y < end.y) {

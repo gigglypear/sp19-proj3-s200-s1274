@@ -80,8 +80,8 @@ public class World {
 
         totalRms += 1;
 
-//        int maxRms = RandomUtils.uniform(RANDOM, 5, 8); //can add more rooms once it works
-        int maxRms = 4; /**hard code for now; CHANGE*/
+        int maxRms = RandomUtils.uniform(RANDOM, 5, 8); //can add more rooms once it works
+//        int maxRms = 4; /**hard code for now; CHANGE*/
 
         while(maxRms != totalRms) {
             Room RmToConnect = Room.roomGenerator(world, RANDOM);
@@ -109,12 +109,7 @@ public class World {
             currRm = RmToConnect;
         }
 
-        for(Pos opening: openFringe){
-            int x = opening.x;
-            int y = opening.y;
 
-            world[x][y] = TileSelect.checkNeighbors(world, x, y, Tileset.WALL);
-        }
 
 
 
