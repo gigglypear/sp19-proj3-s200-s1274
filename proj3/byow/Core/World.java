@@ -14,7 +14,7 @@ public class World {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 40;
-    private static final long SEED = 897432;//939;
+    private static final long SEED = 8;//939;
     private static final Random RANDOM = new Random(SEED);
 
     private List<Room> allRooms;
