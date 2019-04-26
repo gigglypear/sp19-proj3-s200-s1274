@@ -14,8 +14,11 @@ public class World {
 
     private static final int WIDTH = 80;
     private static final int HEIGHT = 40;
-    private static final long SEED = 897432;//939;
-    private static final Random RANDOM = new Random(SEED);
+//    private static final long SEED;
+//    private static final Random RANDOM;
+
+    private long SEED;
+    private Random RANDOM;
 
     private List<Room> allRooms;
     private HashMap<Room, Pos> OpenRm;
@@ -24,15 +27,17 @@ public class World {
     private int totalRms;
     private int overlapTries;
 
-    public World() {
+    public World(long seed) {
         allRooms = new ArrayList<>();
         OpenRm = new HashMap<>();
         openFringe = new ArrayList<>();
         totalRms = 0;
         overlapTries = 0;
+        SEED = seed;
+        RANDOM = new Random(SEED);
     }
 
-    public void generateWorld(TETile[][] world){
+    public TETile[][] generateWorld(TETile[][] world){
 
 
         /**
@@ -91,6 +96,7 @@ public class World {
             }
         }
 
+        return world;
 
     }
 
@@ -141,7 +147,7 @@ public class World {
             }
         }
 
-        World wholeWorld = new World();
+        World wholeWorld = new World(123);
 
         wholeWorld.generateWorld(world);
 

@@ -80,9 +80,9 @@ public class Room implements Spaces {
         int width = RandomUtils.uniform(seed, 4, 15);
 
 
-
-        System.out.println(startX + ", " +  startY);
-        System.out.println(width + ", " + height );
+//
+//        System.out.println(startX + ", " +  startY);
+//        System.out.println(width + ", " + height );
 
         Pos start = new Pos(startX, startY);
         Room room = new Room(start, width, height);

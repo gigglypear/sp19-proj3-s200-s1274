@@ -2,12 +2,13 @@ package byow.Core;
 
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int HEIGHT = 40;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -45,8 +46,25 @@ public class Engine {
         //
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
+//        long maxLong = 9223372036854775807;
+        int inputLength = input.length();
+        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')
+                && (input.charAt(inputLength - 1) == 'S' || input.charAt(inputLength - 1) == 's')) {
+            long seed = Long.parseLong(input.substring(1, input.length()-1));
+            World newworld = new World(seed);
 
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+            TETile[][] world = new TETile[WIDTH][HEIGHT];
+            for (int x = 0; x < WIDTH; x += 1) {
+                for (int y = 0; y < HEIGHT; y += 1) {
+                    world[x][y] = Tileset.NOTHING;
+                }
+            }
+
+            return newworld.generateWorld(world);
+
+        } else {
+            TETile[][] finalWorldFrame = null;
+            return finalWorldFrame;
+        }
     }
 }

@@ -167,7 +167,7 @@ public class Hallway implements Spaces {
         } else{
             turningPt = new Pos(end.x, start.y);
         }
-        System.out.println("turning pt " + turningPt.x + ", " + turningPt.y);
+//        System.out.println("turning pt " + turningPt.x + ", " + turningPt.y);
         return turningPt;
 
     }
