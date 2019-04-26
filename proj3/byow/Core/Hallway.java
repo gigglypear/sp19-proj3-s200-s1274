@@ -32,13 +32,13 @@ public class Hallway implements Spaces {
             s = end.y;
         }
         for (int i = s; i < e + 1; i++) {
-            world[start.x - 1][i] = Tileset.WALL;
+//            world[start.x - 1][i] = TileSelect.tileType(world, start.x - 1, i, t);
             world[start.x][i] = t;
-            world[start.x + 1][i] = Tileset.WALL;
+//            world[start.x + 1][i] = TileSelect.tileType(world, start.x + 1, i, t);
         }
 
 
-        world[end.x][end.y] = Tileset.WALL;
+//        world[end.x][end.y] = TileSelect.tileType(world, end.x, end.y, t);
 
     }
 
@@ -65,13 +65,15 @@ public class Hallway implements Spaces {
 
         for (int i = s; i < e + 1; i++) {
 
-            world[i][start.y - 1] = Tileset.WALL;
+//            world[i][start.y - 1] = TileSelect.tileType(world, i, start.y - 1, t);
             world[i][start.y] = t;
-            world[i][start.y + 1] = Tileset.WALL;
+//            world[i][start.y + 1] = TileSelect.tileType(world, i, start.y + 1, t);
 
         }
 
-        world[end.x][end.y] = Tileset.WALL;
+//        world[end.x][end.y] = TileSelect.checkNeighbors(world, end.x, end.y, t);
+
+
 
     }
 
@@ -86,16 +88,24 @@ public class Hallway implements Spaces {
     public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h){
         Pos start = h.startP;
         Pos end = h.endP;
+        TETile type;
 
         //case where we draw a vertical hallway first
         if(start.x == turningPt.x){
             // case where vertical hallway go up
             if (start.y < turningPt.y) {
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y + 1)));
-                world[turningPt.x][turningPt.y+1] = Tileset.WALL;
+
+//                type = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y+1, Tileset.WALL);
+//                world[turningPt.x][turningPt.y+1] = type;
+//                world[turningPt.x][turningPt.y+1] = Tileset.FLOWER;
+
             } else { // case where vertical hallway go down
                 drawVer(world, t, new Hallway(start, new Pos (turningPt.x, turningPt.y - 1)));
-                world[turningPt.x][turningPt.y-1] = Tileset.WALL;
+
+//                type = TileSelect.checkNeighbors(world, turningPt.x,turningPt.y-1, Tileset.WALL);
+//                world[turningPt.x][turningPt.y-1] = type;
+//                world[turningPt.x][turningPt.y-1] = Tileset.FLOWER;
             }
             // draw horizontal hallway, case where horizontal go right
             if (turningPt.x < end.x) {
@@ -107,10 +117,17 @@ public class Hallway implements Spaces {
             // case where horizontal hallway go right
             if (start.x < turningPt.x) {
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x + 1, turningPt.y)));
-                world[turningPt.x + 1][turningPt.y] = Tileset.WALL;
+
+//                type = TileSelect.checkNeighbors(world, turningPt.x + 1,turningPt.y, Tileset.WALL);
+//                world[turningPt.x + 1][turningPt.y] = type;
+//                world[turningPt.x + 1][turningPt.y] = Tileset.FLOWER;
+
             } else { // case where horizontal hallway go left
                 drawHor(world, t, new Hallway(start, new Pos (turningPt.x - 1, turningPt.y)));
-                world[turningPt.x - 1][turningPt.y] = Tileset.WALL;
+
+//                type = TileSelect.checkNeighbors(world, turningPt.x - 1,turningPt.y, Tileset.WALL);
+//                world[turningPt.x - 1][turningPt.y] = type;
+//                world[turningPt.x - 1][turningPt.y] = Tileset.FLOWER;
             }
             // draw vertical hallway, case where vertical go up
             if (turningPt.y < end.y) {
@@ -132,6 +149,17 @@ public class Hallway implements Spaces {
      * WARNING: Make sure this works for other cases
      * @return
      */
+//    public static Pos turningPos(Pos start, Pos end){
+//        Pos turningPt;
+//        if(start.x < end.x){
+//            turningPt = new Pos(start.x, end.y);
+//        } else{
+//            turningPt = new Pos(end.x, start.y);
+//        }
+//        System.out.println("turning pt " + turningPt.x + ", " + turningPt.y);
+//        return turningPt;
+//
+//    }
     public static Pos turningPos(Pos start, Pos end, Room r){
         Pos turningPt;
         if(start.y == r.getStartP().y || start.y == r.getEndP().y){
