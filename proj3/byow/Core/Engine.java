@@ -52,6 +52,9 @@ public class Engine {
             long seed = Long.parseLong(input.substring(1, input.length() - 1));
             World newworld = new World(seed);
 
+            TERenderer ter = new TERenderer();
+            ter.initialize(WIDTH, HEIGHT);
+
             TETile[][] world = new TETile[WIDTH][HEIGHT];
             for (int x = 0; x < WIDTH; x += 1) {
                 for (int y = 0; y < HEIGHT; y += 1) {
@@ -59,8 +62,10 @@ public class Engine {
                 }
             }
 
-            return newworld.generateWorld(world);
+            TETile[][] updateworld = newworld.generateWorld(world);
+            ter.renderFrame(updateworld);
 
+            return updateworld;
         } else {
             TETile[][] finalWorldFrame = null;
             return finalWorldFrame;

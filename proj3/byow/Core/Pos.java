@@ -26,9 +26,4 @@ public class Pos {
         return true;
     }
 
-
-    public boolean isOpen() {
-        //TODO
-        return false;
-    }
 }
