@@ -138,7 +138,7 @@ public class World {
             }
         }
 
-        World wholeWorld = new World(3737); //7752
+        World wholeWorld = new World(29375810); //7752 //3737
 
         wholeWorld.generateWorld(world);
 

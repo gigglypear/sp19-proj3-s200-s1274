@@ -85,6 +85,52 @@ public class Hallway {
      * @param turningPt -- Position where hallway makes turn
      * @param h
      */
+
+    // the original incase the updated one below doesnt work
+//    public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h) {
+//        Pos start = h.startP;
+//        Pos end = h.endP;
+//        TETile type;
+//
+//        //case where we draw a vertical hallway first
+//        if (start.x == turningPt.x) {
+//            // case where vertical hallway go up
+//            if (start.y < turningPt.y) {
+//                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y + 1)));
+//
+//            } else { // case where vertical hallway go down
+//                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y - 1)));
+//
+//            }
+//            // draw horizontal hallway, case where horizontal go right
+//            if (turningPt.x < end.x) {
+//                drawHor(world, t, new Hallway(new Pos(turningPt.x + 1, turningPt.y), end));
+//            } else {
+//                drawHor(world, t, new Hallway(new Pos(turningPt.x - 1, turningPt.y), end));
+//            }
+//        } else { // case where we draw a horizontal hallway first
+//            // case where horizontal hallway go right
+//            if (start.x < turningPt.x) {
+//                drawHor(world, t, new Hallway(start, new Pos(turningPt.x + 1, turningPt.y)));
+//
+//            } else { // case where horizontal hallway go left
+//                drawHor(world, t, new Hallway(start, new Pos(turningPt.x - 1, turningPt.y)));
+//
+//            }
+//            // draw vertical hallway, case where vertical go up
+//            if (turningPt.y < end.y) {
+//                drawVer(world, t, new Hallway(new Pos(turningPt.x, turningPt.y + 1), end));
+//
+//            } else { // case where vertical hallway go down
+//                drawVer(world, t, new Hallway(new Pos(turningPt.x, turningPt.y - 1), end));
+//            }
+//        }
+//
+//        world[end.x][end.y] = t;
+//
+//    }
+
+    //the updated version of drawL hallway
     public static void drawL(TETile[][] world, TETile t, Pos turningPt, Hallway h) {
         Pos start = h.startP;
         Pos end = h.endP;
@@ -93,35 +139,12 @@ public class Hallway {
         //case where we draw a vertical hallway first
         if (start.x == turningPt.x) {
             // case where vertical hallway go up
-            if (start.y < turningPt.y) {
-                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y + 1)));
+            drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y)));
+            drawHor(world, t, new Hallway(new Pos(turningPt.x, turningPt.y), end));
 
-            } else { // case where vertical hallway go down
-                drawVer(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y - 1)));
-
-            }
-            // draw horizontal hallway, case where horizontal go right
-            if (turningPt.x < end.x) {
-                drawHor(world, t, new Hallway(new Pos(turningPt.x + 1, turningPt.y), end));
-            } else {
-                drawHor(world, t, new Hallway(new Pos(turningPt.x - 1, turningPt.y), end));
-            }
         } else { // case where we draw a horizontal hallway first
-            // case where horizontal hallway go right
-            if (start.x < turningPt.x) {
-                drawHor(world, t, new Hallway(start, new Pos(turningPt.x + 1, turningPt.y)));
-
-            } else { // case where horizontal hallway go left
-                drawHor(world, t, new Hallway(start, new Pos(turningPt.x - 1, turningPt.y)));
-
-            }
-            // draw vertical hallway, case where vertical go up
-            if (turningPt.y < end.y) {
-                drawVer(world, t, new Hallway(new Pos(turningPt.x, turningPt.y + 1), end));
-
-            } else { // case where vertical hallway go down
-                drawVer(world, t, new Hallway(new Pos(turningPt.x, turningPt.y - 1), end));
-            }
+            drawHor(world, t, new Hallway(start, new Pos(turningPt.x, turningPt.y)));
+            drawVer(world, t, new Hallway(new Pos(turningPt.x, turningPt.y + 1), end));
         }
 
         world[end.x][end.y] = t;
