@@ -85,8 +85,8 @@ public class World {
         }
 
 
-        for (int x = 3; x < WIDTH - 1; x += 1) {
-            for (int y = 3; y < HEIGHT - 1; y += 1) {
+        for (int x = 1; x < WIDTH - 1; x += 1) {
+            for (int y = 1; y < HEIGHT - 1; y += 1) {
                 TileSelect.drawWalls(world, x, y);
             }
         }
@@ -138,7 +138,7 @@ public class World {
             }
         }
 
-        World wholeWorld = new World(9987532);
+        World wholeWorld = new World(3737); //7752
 
         wholeWorld.generateWorld(world);
 
