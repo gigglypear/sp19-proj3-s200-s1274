@@ -41,20 +41,6 @@ public class World {
 
         /**
          * Generalization for method
-         * Makes 1 initial room and an opening in that room -->
-         * Adds room to list of all rooms -->
-         * Adds open space to the fringe and maps intial room to its opening
-         * (will get overridden for other rooms) -->
-         * Pick a random number of rooms to open and sets inital rm to current
-         * room
-         * Makes another room and checks that there is not overlap -->
-         *    If there's overlap generates a new room until no longer overlaps or
-         *    when number of tries = 6 and then just lets overlap occur
-         * Adds second room to list of all rooms -->
-         * Makes random opening in second room -->
-         * Conenects two rooms -->
-         * Sets room that was just connected to current room
-         * Repeats process until max number of rooms achieved
          */
         int direction = RandomUtils.uniform(RANDOM, 3);
 
@@ -69,6 +55,7 @@ public class World {
 
 
         int maxRms = RandomUtils.uniform(RANDOM, 5, 10);
+//        int maxRms = 6; /**hard code for now; CHANGE*/
         Room currRm = initRm;
 
         while (maxRms != totalRms + 1) {
@@ -151,7 +138,7 @@ public class World {
             }
         }
 
-        World wholeWorld = new World(44959);
+        World wholeWorld = new World(9987532);
 
         wholeWorld.generateWorld(world);
 
