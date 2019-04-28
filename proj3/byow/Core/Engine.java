@@ -4,11 +4,16 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.io.FileReader;
+
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
+    public long seed;
+    public String command;
+
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -46,29 +51,95 @@ public class Engine {
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
 //        long maxLong = 9223372036854775807;
-        int inputLength = input.length();
-        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')
-                && (input.charAt(inputLength - 1) == 'S' || input.charAt(inputLength - 1) == 's')) {
-            long seed = Long.parseLong(input.substring(1, input.length() - 1));
-            World newworld = new World(seed);
+//        int inputLength = input.length();
+//        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')
+//                && (input.charAt(inputLength - 1) == 'S' || input.charAt(inputLength - 1) == 's')) {
+//            long seed = Long.parseLong(input.substring(1, input.length() - 1));
+//            World newworld = new World(seed);
+//
+//            TERenderer ter = new TERenderer();
+//            ter.initialize(WIDTH, HEIGHT);
+//
+//            TETile[][] world = new TETile[WIDTH][HEIGHT];
+//            for (int x = 0; x < WIDTH; x += 1) {
+//                for (int y = 0; y < HEIGHT; y += 1) {
+//                    world[x][y] = Tileset.NOTHING;
+//                }
+//            }
+//
+//            TETile[][] updateworld = newworld.generateWorld(world);
+//            ter.renderFrame(updateworld);
+//
+//            return updateworld;
 
-            TERenderer ter = new TERenderer();
-            ter.initialize(WIDTH, HEIGHT);
+        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
+            return newGame(input);
 
-            TETile[][] world = new TETile[WIDTH][HEIGHT];
-            for (int x = 0; x < WIDTH; x += 1) {
-                for (int y = 0; y < HEIGHT; y += 1) {
-                    world[x][y] = Tileset.NOTHING;
-                }
-            }
-
-            TETile[][] updateworld = newworld.generateWorld(world);
-            ter.renderFrame(updateworld);
-
-            return updateworld;
+        } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
+            return loadGame(input);
         } else {
             TETile[][] finalWorldFrame = null;
             return finalWorldFrame;
         }
+    }
+
+
+    private TETile[][] newGame(String input) {
+        command = input;
+        int pointer = 0;
+        while (pointer < input.length()) {
+            pointer++;
+            if (input.charAt(pointer) == 's' || input.charAt(pointer) == 'S') {
+                break;
+            }
+        }
+        seed = Long.parseLong(input.substring(1, pointer - 1));
+
+        World newworld = new World(seed);
+
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+
+        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+
+        world = newworld.generateWorld(world);
+        Avatar avatar = newworld.avatar;
+
+        for(int i = pointer + 1; i < input.length(); i++) {
+            if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
+                world = avatar.goUp(world);
+            } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
+                world = avatar.goDown(world);
+            } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
+                world = avatar.goLeft(world);
+            } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
+                world = avatar.goRight(world);
+            } else if (input.charAt(i) == ':') {
+                if (input.charAt(i) == 'q' || input.charAt(i) == 'Q') {
+                    saveGame(input);
+                    break;
+                }
+            }
+        }
+
+
+        ter.renderFrame(world);
+        return world;
+    }
+
+    private TETile[][] loadGame(String input) {
+        //FileReader reader = new FileReader("save.txt");
+
+        return newGame(input);
+    }
+
+
+    private void saveGame(String input) {
+
     }
 }

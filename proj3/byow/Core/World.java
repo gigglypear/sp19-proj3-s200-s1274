@@ -26,6 +26,8 @@ public class World {
     private int totalRms;
     private int overlapTries;
 
+    protected Avatar avatar;
+
     public World(long seed) {
         allRooms = new ArrayList<>();
         openRm = new HashMap<>();
@@ -48,6 +50,9 @@ public class World {
         initRm.draw(world, Tileset.FLOOR);
         allRooms.add(initRm);
         totalRms += 1;
+
+        //Put down Avatar in the first room
+
 
         Pos open1 = initRm.randomOpeningGenerator(direction, RANDOM, world);
         openRm.put(initRm, open1);
@@ -91,6 +96,9 @@ public class World {
             }
         }
 
+        Room firstRm = allRooms.get(0);
+        this.putAvatar(firstRm, world, RANDOM);
+
         return world;
 
 
@@ -124,6 +132,24 @@ public class World {
 
     }
 
+    /***
+     * this method put an Avatar randomly in the room
+     * @param r
+     * @param world
+     * @param rand
+     */
+    protected void putAvatar(Room r, TETile[][] world, Random rand) {
+        Pos rStart = r.getStartP();
+        Pos rEnd = r.getEndP();
+
+        int x = rand.nextInt(rEnd.x - rStart.x - 1) + rStart.x + 1;
+        int y = rand.nextInt(rEnd.y - rStart.y - 1) + rStart.y + 1;
+        Pos avatarLoc = new Pos(x, y);
+        this.avatar = new Avatar(avatarLoc);
+        world[x][y] = Tileset.AVATAR;
+    }
+
+
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -139,7 +165,7 @@ public class World {
         }
 
 
-        World wholeWorld = new World(7752); //7752
+        World wholeWorld = new World(928374); //7752
 
 
         wholeWorld.generateWorld(world);
