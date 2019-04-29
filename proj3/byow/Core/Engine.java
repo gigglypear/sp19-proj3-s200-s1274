@@ -16,24 +16,13 @@ public class Engine {
     public long seed;
     public String command;
 
+    private int width;
+    private int height;
+
 
     private World newworld;
     private TETile[][] world;
     private Avatar avatar;
-
-
-    public Engine(){
-
-        StdDraw.setCanvasSize(WIDTH * 16, HEIGHT * 16);
-        Font font = new Font("Monaco", Font.BOLD, 30);
-        StdDraw.setFont(font);
-        StdDraw.setXscale(0, WIDTH);
-        StdDraw.setYscale(0, HEIGHT);
-        StdDraw.clear(Color.BLACK);
-        StdDraw.enableDoubleBuffering();
-        drawWelcomeWindow();
-
-    }
 
 
     /**
@@ -42,9 +31,7 @@ public class Engine {
      */
     public void interactWithKeyboard() {
         System.out.println("interact called");
-
-        Engine welcome = new Engine();
-        welcome.drawWelcomeWindow();
+        drawWelcomeWindow();
 
 
     }
@@ -194,22 +181,30 @@ public class Engine {
 
     public void drawWelcomeWindow() {
 
-        //Don't know if need to clear?
-        //For some reason StdDraw.clear() won't work and returns blank screen
-//        StdDraw.clear();
+//        edu.princeton.cs.algs4.StdDraw.clear();
 
+        this.width = WIDTH;
+        this.height = HEIGHT;
 
-        Font font = new Font("Arial", Font.BOLD, 30);
-        StdDraw.setPenColor(edu.princeton.cs.algs4.StdDraw.WHITE);
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+//        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.setFont(font);
 
         String newGame = "New Game (N)";
         String loadGame = "Load Game (L)";
         String quitGame = "Quit Game (Q)";
 
-        StdDraw.text(WIDTH/2, (HEIGHT/2) + 3, newGame);
-        StdDraw.text(WIDTH/2, HEIGHT/2, loadGame);
-        StdDraw.text(WIDTH/2, (HEIGHT/2) - 3, quitGame);
+        StdDraw.text(width/2, (height/2) + 3, newGame);
+        StdDraw.text(width/2, height/2, loadGame);
+        StdDraw.text(width/2, (height/2) - 3, quitGame);
         StdDraw.show();
     }
 }
