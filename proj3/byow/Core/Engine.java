@@ -3,7 +3,9 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
+import java.awt.*;
 import java.io.FileReader;
 
 public class Engine {
@@ -14,12 +16,36 @@ public class Engine {
     public long seed;
     public String command;
 
+    private int width;
+    private int height;
+
+    public Engine(){
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+        drawWelcomeWindow();
+
+    }
+
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
      * including inputs from the main menu.
      */
     public void interactWithKeyboard() {
+        System.out.println("interact called");
+
+        Engine welcome = new Engine();
+        welcome.drawWelcomeWindow();
+
+
     }
 
     /**
@@ -141,5 +167,28 @@ public class Engine {
 
     private void saveGame(String input) {
 
+    }
+
+    public void drawWelcomeWindow() {
+
+        //Don't know if need to clear?
+        //For some reason StdDraw.clear() won't work and returns blank screen
+//        StdDraw.clear();
+
+        int width = Engine.WIDTH;
+        int height = Engine.HEIGHT;
+
+        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setPenColor(edu.princeton.cs.algs4.StdDraw.WHITE);
+        StdDraw.setFont(font);
+
+        String newGame = "New Game (N)";
+        String loadGame = "Load Game (L)";
+        String quitGame = "Quit Game (Q)";
+
+        StdDraw.text(width/2, (height/2) + 3, newGame);
+        StdDraw.text(width/2, height/2, loadGame);
+        StdDraw.text(width/2, (height/2) - 3, quitGame);
+        StdDraw.show();
     }
 }
