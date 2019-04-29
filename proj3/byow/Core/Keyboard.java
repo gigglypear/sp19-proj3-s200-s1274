@@ -32,11 +32,17 @@ public class Keyboard {
                                 System.out.println("really quit now");
                                 return ":Q";
                             }
+                            break;
                         }
                     }
 
                 } else {
-                    return Character.toString(letter);
+                    String input = Character.toString(letter).toLowerCase();
+                    if (input.equals("a") || input.equals("w") || input.equals("s") || input.equals("d")) {
+                        return input;
+                    } else {
+                        return "";
+                    }
                 }
             }
 

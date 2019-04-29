@@ -42,11 +42,12 @@ public class Engine {
             System.out.println(input);
             if (input.equals(":Q") || input.equals(":q")) {
                 quit = true;
-            } else {
+            } else if (input.length() != 0){
                 world = interactWithInputString(input);
+                ter.renderFrame(world);
             }
 
-            ter.renderFrame(world);
+
         }
 
 
