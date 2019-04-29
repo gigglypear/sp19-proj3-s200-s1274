@@ -8,12 +8,14 @@ import java.util.Random;
 
 public class Keyboard {
 
-    public static void sollicitInput() {
+    public static String sollicitInput() {
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
                 char letter = StdDraw.nextKeyTyped();
                 if(letter == 'N' || letter == 'n'){
                     System.out.println("new game ");
+                    System.out.println(letter);
+                    return getSeed(letter);
 
                 } else if (letter == 'L' || letter == 'l'){
                     System.out.println("load game");
@@ -38,26 +40,30 @@ public class Keyboard {
     }
 
 
-//    public String getSeed() {
-//        //TODO: Read n letters of player input
-//
-//        StringBuilder allchars = new StringBuilder();
-//
-//
-////        while(){
-////            if(StdDraw.hasNextKeyTyped() == true){
-////                char letter = StdDraw.nextKeyTyped();
-////                if(letter == 'N' || letter == 'n'){
-////
-////                }
-////
-////                //allchars.append(letter);
-////            }
-////        }
-////        String input = allchars.toString();
-//
-//        return input;
-//    }
+
+    private static String getSeed(char n) {
+
+        StringBuilder allchars = new StringBuilder();
+        allchars.append(n);
+
+        boolean noTerminate = true;
+
+        while(noTerminate){
+            if(StdDraw.hasNextKeyTyped()){
+                char number = StdDraw.nextKeyTyped();
+                System.out.println(number);
+                if(number == 'S' || number == 's'){
+                    noTerminate = false;
+                }
+                allchars.append(number);
+            }
+
+        }
+        String input = allchars.toString();
+        System.out.println(input);
+
+        return input;
+    }
 
 
 
