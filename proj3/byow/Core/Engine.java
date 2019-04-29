@@ -16,18 +16,19 @@ public class Engine {
     public long seed;
     public String command;
 
-    private int width;
-    private int height;
+
+    private World newworld;
+    private TETile[][] world;
+    private Avatar avatar;
+
 
     public Engine(){
-        this.width = WIDTH;
-        this.height = HEIGHT;
 
-        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        StdDraw.setCanvasSize(WIDTH * 16, HEIGHT * 16);
         Font font = new Font("Monaco", Font.BOLD, 30);
         StdDraw.setFont(font);
-        StdDraw.setXscale(0, this.width);
-        StdDraw.setYscale(0, this.height);
+        StdDraw.setXscale(0, WIDTH);
+        StdDraw.setYscale(0, HEIGHT);
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
         drawWelcomeWindow();
@@ -103,9 +104,27 @@ public class Engine {
 
         } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
             return loadGame(input);
+
         } else {
-            TETile[][] finalWorldFrame = null;
-            return finalWorldFrame;
+
+            for(int i = 0; i < input.length(); i++) {
+                if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
+                    world = avatar.goUp(world);
+                } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
+                    world = avatar.goDown(world);
+                } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
+                    world = avatar.goLeft(world);
+                } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
+                    world = avatar.goRight(world);
+                } else if (input.charAt(i) == ':') {
+                    if (input.charAt(i + 1) == 'q' || input.charAt(i + 1) == 'Q') {
+                        saveGame(input);
+                        break;
+                    }
+                }
+            }
+//            ter.renderFrame(world);
+            return world;
         }
     }
 
@@ -121,12 +140,12 @@ public class Engine {
         }
         seed = Long.parseLong(input.substring(1, pointer - 1));
 
-        World newworld = new World(seed);
+        newworld = new World(seed);
 
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
+//        TERenderer ter = new TERenderer();
+//        ter.initialize(WIDTH, HEIGHT);
 
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
+        world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
@@ -134,27 +153,31 @@ public class Engine {
         }
 
         world = newworld.generateWorld(world);
-        Avatar avatar = newworld.avatar;
+        avatar = newworld.avatar;
 
-        for(int i = pointer + 1; i < input.length(); i++) {
-            if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
-                world = avatar.goUp(world);
-            } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
-                world = avatar.goDown(world);
-            } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
-                world = avatar.goLeft(world);
-            } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
-                world = avatar.goRight(world);
-            } else if (input.charAt(i) == ':') {
-                if (input.charAt(i) == 'q' || input.charAt(i) == 'Q') {
-                    saveGame(input);
-                    break;
-                }
-            }
+        if (pointer + 1 <= input.length()) {
+            String rest = input.substring(pointer + 1);
+            interactWithInputString(rest);
         }
+//        for(int i = pointer + 1; i < input.length(); i++) {
+//            if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
+//                world = avatar.goUp(world);
+//            } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
+//                world = avatar.goDown(world);
+//            } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
+//                world = avatar.goLeft(world);
+//            } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
+//                world = avatar.goRight(world);
+//            } else if (input.charAt(i) == ':') {
+//                if (input.charAt(i) == 'q' || input.charAt(i) == 'Q') {
+//                    saveGame(input);
+//                    break;
+//                }
+//            }
+//        }
 
 
-        ter.renderFrame(world);
+//        ter.renderFrame(world);
         return world;
     }
 
@@ -175,8 +198,6 @@ public class Engine {
         //For some reason StdDraw.clear() won't work and returns blank screen
 //        StdDraw.clear();
 
-        int width = Engine.WIDTH;
-        int height = Engine.HEIGHT;
 
         Font font = new Font("Arial", Font.BOLD, 30);
         StdDraw.setPenColor(edu.princeton.cs.algs4.StdDraw.WHITE);
@@ -186,9 +207,9 @@ public class Engine {
         String loadGame = "Load Game (L)";
         String quitGame = "Quit Game (Q)";
 
-        StdDraw.text(width/2, (height/2) + 3, newGame);
-        StdDraw.text(width/2, height/2, loadGame);
-        StdDraw.text(width/2, (height/2) - 3, quitGame);
+        StdDraw.text(WIDTH/2, (HEIGHT/2) + 3, newGame);
+        StdDraw.text(WIDTH/2, HEIGHT/2, loadGame);
+        StdDraw.text(WIDTH/2, (HEIGHT/2) - 3, quitGame);
         StdDraw.show();
     }
 }
