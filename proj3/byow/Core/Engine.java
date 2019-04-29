@@ -3,7 +3,6 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
@@ -26,6 +25,8 @@ public class Engine {
     private TETile[][] world;
     private Avatar avatar;
 
+    private Pos mouseCood;
+    private boolean initialized;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -45,6 +46,17 @@ public class Engine {
             } else if (input.length() != 0){
                 world = interactWithInputString(input);
                 ter.renderFrame(world);
+            }
+
+            if (initialized) {
+                mouseCood = new Pos((int) Math.floor(StdDraw.mouseX()), (int) Math.floor(StdDraw.mouseY()));
+                System.out.println(mouseCood.x + " , " + mouseCood.y);
+                String tiletype = mouseOver(mouseCood);
+                System.out.println(tiletype);
+                Font fonthud = new Font("Arial", Font.PLAIN, 10);
+                StdDraw.setPenColor(StdDraw.YELLOW);
+                StdDraw.setFont(fonthud);
+                StdDraw.text(2, HEIGHT - 2, tiletype);
             }
 
 
@@ -146,6 +158,7 @@ public class Engine {
 
         newworld = new World(seed);
 
+        initialized = true;
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
 
@@ -224,5 +237,18 @@ public class Engine {
         StdDraw.text(width/2, height/2, loadGame);
         StdDraw.text(width/2, (height/2) - 3, quitGame);
         StdDraw.show();
+    }
+
+
+    private String mouseOver(Pos p) {
+        TETile t = world[p.x][p.y];
+        if (t.equals(Tileset.AVATAR)) {
+            return "Avatar";
+        } else if (t.equals(Tileset.WALL)) {
+            return "WALL"; }
+        else {
+            return "???";
+        }
+
     }
 }
