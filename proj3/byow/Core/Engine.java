@@ -3,10 +3,12 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
 import java.io.FileReader;
+import java.util.HashMap;
 
 public class Engine {
     TERenderer ter = new TERenderer();
@@ -33,10 +35,19 @@ public class Engine {
         System.out.println("interact called");
         drawWelcomeWindow();
 
-        String input = Keyboard.sollicitInput();
-        System.out.println(input);
-        world = interactWithInputString(input);
-        ter.renderFrame(world);
+        boolean quit = false;
+        while (!quit) {
+            String input = Keyboard.sollicitInput();
+
+            System.out.println(input);
+            if (input.equals(":Q") || input.equals(":q")) {
+                quit = true;
+            } else {
+                world = interactWithInputString(input);
+            }
+
+            ter.renderFrame(world);
+        }
 
 
     }
@@ -147,6 +158,7 @@ public class Engine {
         world = newworld.generateWorld(world);
         avatar = newworld.avatar;
 
+       //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
             String rest = input.substring(pointer + 1);
             interactWithInputString(rest);

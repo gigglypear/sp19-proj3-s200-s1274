@@ -19,6 +19,7 @@ public class Keyboard {
 
                 } else if (letter == 'L' || letter == 'l'){
                     System.out.println("load game");
+                    return Character.toString(letter);
                     //load method
 
                 } else if (letter == ':') {
@@ -29,10 +30,13 @@ public class Keyboard {
                             if (checkQ == 'Q' || checkQ == 'q') {
                                 //quit and save method
                                 System.out.println("really quit now");
+                                return ":Q";
                             }
                         }
                     }
 
+                } else {
+                    return Character.toString(letter);
                 }
             }
 
