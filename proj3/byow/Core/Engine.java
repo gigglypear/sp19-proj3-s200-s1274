@@ -32,6 +32,7 @@ public class Engine {
     public void interactWithKeyboard() {
         System.out.println("interact called");
         drawWelcomeWindow();
+        Keyboard.sollicitInput();
 
 
     }
