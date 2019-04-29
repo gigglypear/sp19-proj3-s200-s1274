@@ -32,7 +32,11 @@ public class Engine {
     public void interactWithKeyboard() {
         System.out.println("interact called");
         drawWelcomeWindow();
-        Keyboard.sollicitInput();
+
+        String input = Keyboard.sollicitInput();
+        System.out.println(input);
+        world = interactWithInputString(input);
+        ter.renderFrame(world);
 
 
     }
@@ -130,8 +134,8 @@ public class Engine {
 
         newworld = new World(seed);
 
-//        TERenderer ter = new TERenderer();
-//        ter.initialize(WIDTH, HEIGHT);
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
 
         world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
@@ -143,7 +147,7 @@ public class Engine {
         world = newworld.generateWorld(world);
         avatar = newworld.avatar;
 
-        if (pointer + 1 <= input.length()) {
+        if (pointer + 1 < input.length()) {
             String rest = input.substring(pointer + 1);
             interactWithInputString(rest);
         }

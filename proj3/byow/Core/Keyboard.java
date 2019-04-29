@@ -60,7 +60,7 @@ public class Keyboard {
 
         }
         String input = allchars.toString();
-        System.out.println(input);
+//        System.out.println(input);
 
         return input;
     }
