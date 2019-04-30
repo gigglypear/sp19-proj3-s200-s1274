@@ -6,13 +6,8 @@ import byow.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
-import java.io.FileReader;
+import java.io.*;
 import java.util.HashMap;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 public class Engine {
     TERenderer ter = new TERenderer();
@@ -53,10 +48,12 @@ public class Engine {
             if (input.equals(":Q") || input.equals(":q")) {
 
                 String saveStr = allStrokes.toString();
-//                System.out.println(saveStr);
-                saveGame(saveStr);
 
+                saveGame(saveStr);
                 quit = true;
+                System.exit(0);
+
+
             } else if (input.length() != 0){
                 allStrokes.append(input);
                 System.out.println("curr string: " + allStrokes);
@@ -220,9 +217,23 @@ public class Engine {
     }
 
     private TETile[][] loadGame(String input) {
-        //FileReader reader = new FileReader("save.txt");
+        StringBuilder loading = new StringBuilder();
 
-        return newGame(input);
+        try{
+            BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(new File("./byow/core/save.txt"))));
+            String line = "";
+            while((line = fr.readLine()) != null) {
+                System.out.println("from txt file: " + line);
+                loading.append(line);
+            }
+        } catch (IOException e){
+            System.out.println("exception case triggered for load");
+        }
+
+        String loaded = loading.toString();
+        allStrokes = loading;
+
+        return newGame(loaded);
     }
 
 
