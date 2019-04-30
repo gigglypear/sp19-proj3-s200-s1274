@@ -9,6 +9,11 @@ import java.awt.*;
 import java.io.FileReader;
 import java.util.HashMap;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
@@ -28,6 +33,10 @@ public class Engine {
     private Pos mouseCood;
     private boolean initialized;
 
+    private StringBuilder allStrokes = new StringBuilder();
+
+
+
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
      * including inputs from the main menu.
@@ -42,8 +51,19 @@ public class Engine {
 
             System.out.println(input);
             if (input.equals(":Q") || input.equals(":q")) {
+
+                String saveStr = allStrokes.toString();
+//                System.out.println(saveStr);
+                saveGame(saveStr);
+
                 quit = true;
             } else if (input.length() != 0){
+                allStrokes.append(input);
+                System.out.println("curr string: " + allStrokes);
+
+                world = interactWithInputString(input);
+                ter.renderFrame(world);
+
                 world = interactWithInputString(input);
                 ter.renderFrame(world);
             }
@@ -206,7 +226,15 @@ public class Engine {
     }
 
 
-    private void saveGame(String input) {
+    private void saveGame(String string) {
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./byow/core/save.txt", false)));
+            out.println(string);
+            out.close();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+            System.out.println("exception case triggered");
+        }
 
     }
 
