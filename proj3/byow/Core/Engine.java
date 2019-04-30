@@ -27,6 +27,7 @@ public class Engine {
 
     private Pos mouseCood;
     private boolean initialized;
+    private String tiletype;
 
     private StringBuilder allStrokes = new StringBuilder();
 
@@ -66,14 +67,24 @@ public class Engine {
             }
 
             if (initialized) {
-                mouseCood = new Pos((int) Math.floor(StdDraw.mouseX()), (int) Math.floor(StdDraw.mouseY()));
-                System.out.println(mouseCood.x + " , " + mouseCood.y);
-                String tiletype = mouseOver(mouseCood);
-                System.out.println(tiletype);
-                Font fonthud = new Font("Arial", Font.PLAIN, 10);
-                StdDraw.setPenColor(StdDraw.YELLOW);
-                StdDraw.setFont(fonthud);
-                StdDraw.text(2, HEIGHT - 2, tiletype);
+                while (true) {
+                    StdDraw.clear(Color.black);
+                    ter.renderFrame(world);
+                    mouseCood = new Pos((int) Math.floor(StdDraw.mouseX()), (int) Math.floor(StdDraw.mouseY()));
+                    System.out.println(mouseCood.x + " , " + mouseCood.y);
+                    if (validateMouseCoor(mouseCood)) {
+                        tiletype = mouseOver(mouseCood);
+                        System.out.println(tiletype);
+                        Font fonthud = new Font("Monaco", Font.BOLD, 14);
+                        StdDraw.setPenColor(StdDraw.YELLOW);
+                        StdDraw.setFont(fonthud);
+                        StdDraw.text(2, HEIGHT - 2, tiletype);
+                        StdDraw.show();
+                        if (StdDraw.hasNextKeyTyped()) {
+                            break;
+                        }
+                    }
+                }
             }
 
 
@@ -284,11 +295,19 @@ public class Engine {
         if (t.equals(Tileset.AVATAR)) {
             return "Avatar";
         } else if (t.equals(Tileset.WALL)) {
-            return "WALL"; }
-        else {
+            return "WALL";
+        } else if (t.equals(Tileset.FLOOR)) {
+            return "FLOOR";
+        } else if (t.equals(Tileset. NOTHING)) {
+            return "VOID";
+        } else {
             return "???";
         }
 
+    }
+
+    private boolean validateMouseCoor(Pos p) {
+        return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
 }
 
