@@ -20,13 +20,13 @@ public class Keyboard {
                     //load method
 
                 } else if (letter == ':') {
-                    System.out.println("gotta figure out how to quit");
+//                    System.out.println("gotta figure out how to quit");
                     while (true) {
                         if (StdDraw.hasNextKeyTyped()) {
                             char checkQ = StdDraw.nextKeyTyped();
                             if (checkQ == 'Q' || checkQ == 'q') {
                                 //quit and save method
-                                System.out.println("really quit now");
+//                                System.out.println("really quit now");
                                 return ":Q";
                             }
                             break;

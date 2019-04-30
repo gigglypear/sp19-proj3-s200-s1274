@@ -92,11 +92,17 @@ public class Engine {
                 System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
-                ter.renderFrame(world);
+
+                if (world == null) {
+//                    System.exit(0);
+                    return;
+                } else {
+                    ter.renderFrame(world);
+                }
+
+//                ter.renderFrame(world);
 
             }
-
-
 
 
         }
@@ -126,40 +132,23 @@ public class Engine {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] interactWithInputString(String input) {
-        // passed in as an argument, and return a 2D tile representation of the
-        // world that would have been drawn if the same inputs had been given
-        // to interactWithKeyboard().
-        //
-        // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
-        // that works for many different input types.
-//        long maxLong = 9223372036854775807;
-//        int inputLength = input.length();
-//        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')
-//                && (input.charAt(inputLength - 1) == 'S'
-//                || input.charAt(inputLength - 1) == 's')) {
-//            long seed = Long.parseLong(input.substring(1, input.length() - 1));
-//            World newworld = new World(seed);
-//
-//            TERenderer ter = new TERenderer();
-//            ter.initialize(WIDTH, HEIGHT);
-//
-//            TETile[][] world = new TETile[WIDTH][HEIGHT];
-//            for (int x = 0; x < WIDTH; x += 1) {
-//                for (int y = 0; y < HEIGHT; y += 1) {
-//                    world[x][y] = Tileset.NOTHING;
-//                }
-//            }
-//
-//            TETile[][] updateworld = newworld.generateWorld(world);
-//            ter.renderFrame(updateworld);
-//
-//            return updateworld;
 
+//        world = new TETile[1][1];
+//        world[0][0] = Tileset.NOTHING;
+
+        TETile[][] toLoad;
         if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
+            allStrokes.append(input);
             return newGame(input);
 
         } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
-            return loadGame(input);
+
+            if (loadGame() == null) {
+                System.exit(0);
+            }
+//            System.out.println("input passed into loadGame: " + input);
+            System.out.println("went to load game");
+            return loadGame();
 
         } else {
 
@@ -174,7 +163,8 @@ public class Engine {
                     world = avatar.goRight(world);
                 } else if (input.charAt(i) == ':') {
                     if (input.charAt(i + 1) == 'q' || input.charAt(i + 1) == 'Q') {
-                        saveGame(input);
+                        saveGame(allStrokes.toString());
+                        System.out.println("this saved: " + allStrokes.toString());
                         break;
                     }
                 }
@@ -215,29 +205,11 @@ public class Engine {
             String rest = input.substring(pointer + 1);
             interactWithInputString(rest);
         }
-//        for(int i = pointer + 1; i < input.length(); i++) {
-//            if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
-//                world = avatar.goUp(world);
-//            } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
-//                world = avatar.goDown(world);
-//            } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
-//                world = avatar.goLeft(world);
-//            } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
-//                world = avatar.goRight(world);
-//            } else if (input.charAt(i) == ':') {
-//                if (input.charAt(i) == 'q' || input.charAt(i) == 'Q') {
-//                    saveGame(input);
-//                    break;
-//                }
-//            }
-//        }
 
-
-//        ter.renderFrame(world);
         return world;
     }
 
-    private TETile[][] loadGame(String input) {
+    private TETile[][] loadGame() {
         StringBuilder loading = new StringBuilder();
 
         try {
@@ -254,6 +226,13 @@ public class Engine {
 
         String loaded = loading.toString();
         allStrokes = loading;
+//        System.out.println("loading: " + loading);
+
+        if (allStrokes.length() == 0) {
+//            System.exit(0);
+
+            return null;
+        }
 
         return newGame(loaded);
     }
@@ -321,7 +300,6 @@ public class Engine {
     private boolean validateMouseCoor(Pos p) {
         return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
-
 
 
 }
