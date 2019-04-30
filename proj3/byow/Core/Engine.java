@@ -97,8 +97,6 @@ public class Engine {
             }
 
 
-
-
         }
 
 
@@ -255,6 +253,10 @@ public class Engine {
         String loaded = loading.toString();
         allStrokes = loading;
 
+        if (allStrokes.length() == 0) {
+            System.exit(0);
+        }
+
         return newGame(loaded);
     }
 
@@ -321,7 +323,6 @@ public class Engine {
     private boolean validateMouseCoor(Pos p) {
         return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
-
 
 
 }
