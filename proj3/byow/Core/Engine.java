@@ -144,9 +144,9 @@ public class Engine {
 
         } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
 
-            if (loadGame() == null) {
-                System.exit(0);
-            }
+//            if (loadGame() == null) {
+//                System.exit(0);
+//            }
 //            System.out.println("input passed into loadGame: " + input);
             System.out.println("went to load game");
             return loadGame();
@@ -230,8 +230,8 @@ public class Engine {
 //        System.out.println("loading: " + loading);
 
         if (allStrokes.length() == 0) {
-//            System.exit(0);
-            return null;
+            System.exit(0);
+//            return null;
         }
 
         return newGame(loaded);
