@@ -33,7 +33,7 @@ public class Engine {
     private World newworld;
     private TETile[][] world;
     private Avatar avatar;
-    private String input;
+
 
     private Pos mouseCood;
     private boolean initialized;
@@ -75,7 +75,7 @@ public class Engine {
                 }
             }
 
-            input = Keyboard.sollicitInput();
+            String input = Keyboard.sollicitInput();
 
             System.out.println(input);
             if (input.equals(":Q") || input.equals(":q")) {
@@ -89,7 +89,7 @@ public class Engine {
 
             } else if (input.length() != 0) {
                 allStrokes.append(input);
-                System.out.println("curr string: " + allStrokes);
+//                System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
                 ter.renderFrame(world);

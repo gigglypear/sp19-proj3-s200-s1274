@@ -2,7 +2,6 @@ package byow.Core;
 
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-import edu.princeton.cs.algs4.StdOut;
 
 public class Avatar {
 
@@ -18,7 +17,7 @@ public class Avatar {
             world[location.x][location.y + 1] = Tileset.AVATAR;
             location = new Pos(location.x, location.y + 1);
         }
-        System.out.println("up");
+
         return world;
     }
 
@@ -28,7 +27,7 @@ public class Avatar {
             world[location.x][location.y - 1] = Tileset.AVATAR;
             location = new Pos(location.x, location.y - 1);
         }
-        System.out.println("down");
+
         return world;
 
     }
@@ -51,7 +50,7 @@ public class Avatar {
             world[location.x + 1][location.y] = Tileset.AVATAR;
             location = new Pos(location.x + 1, location.y);
         }
-        System.out.println("right");
+
         return world;
     }
 }
