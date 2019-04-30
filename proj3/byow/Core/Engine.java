@@ -134,9 +134,8 @@ public class Engine {
      */
     public TETile[][] interactWithInputString(String input) {
 
-
-//        System.out.println("org input: " + input);
-//        String fullStr = input;
+//        world = new TETile[1][1];
+//        world[0][0] = Tileset.NOTHING;
 
         TETile[][] toLoad;
         if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
@@ -149,6 +148,7 @@ public class Engine {
                 System.exit(0);
             }
 //            System.out.println("input passed into loadGame: " + input);
+            System.out.println("went to load game");
             return loadGame();
 
         } else {
