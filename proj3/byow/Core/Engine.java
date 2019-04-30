@@ -5,32 +5,41 @@ import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.*;
-import java.io.*;
-import java.util.HashMap;
+import java.awt.Font;
+import java.awt.Color;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.BufferedReader;
+
 
 public class Engine {
-    TERenderer ter = new TERenderer();
+
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
-    public long seed;
-    public String command;
+    protected long seed;
+    protected String command;
 
     private int width;
     private int height;
 
-
+    private TERenderer ter;
     private World newworld;
     private TETile[][] world;
     private Avatar avatar;
+    private String input;
 
     private Pos mouseCood;
     private boolean initialized;
     private String tiletype;
 
     private StringBuilder allStrokes = new StringBuilder();
-
 
 
     /**
@@ -41,9 +50,32 @@ public class Engine {
         System.out.println("interact called");
         drawWelcomeWindow();
 
+        ter = new TERenderer();
+
+
         boolean quit = false;
         while (!quit) {
-            String input = Keyboard.sollicitInput();
+            if (initialized) {
+                while (!StdDraw.hasNextKeyTyped()) {
+                    StdDraw.clear(Color.black);
+                    ter.renderFrameNoShow(world);
+                    mouseCood = new Pos((int) Math.floor(StdDraw.mouseX()),
+                            (int) Math.floor(StdDraw.mouseY()));
+//                    System.out.println(mouseCood.x + " , " + mouseCood.y);
+                    if (validateMouseCoor(mouseCood)) {
+                        tiletype = mouseOver(mouseCood);
+//                        System.out.println(tiletype);
+                        Font fonthud = new Font("Monaco", Font.BOLD, 14);
+                        StdDraw.setPenColor(StdDraw.YELLOW);
+                        StdDraw.setFont(fonthud);
+                        StdDraw.text(2, HEIGHT - 2, tiletype);
+                        StdDraw.show();
+
+                    }
+                }
+            }
+
+            input = Keyboard.sollicitInput();
 
             System.out.println(input);
             if (input.equals(":Q") || input.equals(":q")) {
@@ -55,37 +87,16 @@ public class Engine {
                 System.exit(0);
 
 
-            } else if (input.length() != 0){
+            } else if (input.length() != 0) {
                 allStrokes.append(input);
                 System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
                 ter.renderFrame(world);
 
-                world = interactWithInputString(input);
-                ter.renderFrame(world);
             }
 
-            if (initialized) {
-                while (true) {
-                    StdDraw.clear(Color.black);
-                    ter.renderFrame(world);
-                    mouseCood = new Pos((int) Math.floor(StdDraw.mouseX()), (int) Math.floor(StdDraw.mouseY()));
-                    System.out.println(mouseCood.x + " , " + mouseCood.y);
-                    if (validateMouseCoor(mouseCood)) {
-                        tiletype = mouseOver(mouseCood);
-                        System.out.println(tiletype);
-                        Font fonthud = new Font("Monaco", Font.BOLD, 14);
-                        StdDraw.setPenColor(StdDraw.YELLOW);
-                        StdDraw.setFont(fonthud);
-                        StdDraw.text(2, HEIGHT - 2, tiletype);
-                        StdDraw.show();
-                        if (StdDraw.hasNextKeyTyped()) {
-                            break;
-                        }
-                    }
-                }
-            }
+
 
 
         }
@@ -124,7 +135,8 @@ public class Engine {
 //        long maxLong = 9223372036854775807;
 //        int inputLength = input.length();
 //        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')
-//                && (input.charAt(inputLength - 1) == 'S' || input.charAt(inputLength - 1) == 's')) {
+//                && (input.charAt(inputLength - 1) == 'S'
+//                || input.charAt(inputLength - 1) == 's')) {
 //            long seed = Long.parseLong(input.substring(1, input.length() - 1));
 //            World newworld = new World(seed);
 //
@@ -151,7 +163,7 @@ public class Engine {
 
         } else {
 
-            for(int i = 0; i < input.length(); i++) {
+            for (int i = 0; i < input.length(); i++) {
                 if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
                     world = avatar.goUp(world);
                 } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
@@ -187,8 +199,6 @@ public class Engine {
         newworld = new World(seed);
 
         initialized = true;
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
 
         world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
@@ -200,7 +210,7 @@ public class Engine {
         world = newworld.generateWorld(world);
         avatar = newworld.avatar;
 
-       //if there are more commands after "N#S",
+        //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
             String rest = input.substring(pointer + 1);
             interactWithInputString(rest);
@@ -230,14 +240,15 @@ public class Engine {
     private TETile[][] loadGame(String input) {
         StringBuilder loading = new StringBuilder();
 
-        try{
-            BufferedReader fr = new BufferedReader(new InputStreamReader(new FileInputStream(new File("./byow/core/save.txt"))));
+        try {
+            BufferedReader fr = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(new File("./byow/core/save.txt"))));
             String line = "";
-            while((line = fr.readLine()) != null) {
+            while ((line = fr.readLine()) != null) {
                 System.out.println("from txt file: " + line);
                 loading.append(line);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("exception case triggered for load");
         }
 
@@ -250,7 +261,8 @@ public class Engine {
 
     private void saveGame(String string) {
         try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./byow/core/save.txt", false)));
+            PrintWriter out = new PrintWriter(new BufferedWriter(
+                    new FileWriter("./byow/core/save.txt", false)));
             out.println(string);
             out.close();
         } catch (IOException e) {
@@ -283,9 +295,9 @@ public class Engine {
         String loadGame = "Load Game (L)";
         String quitGame = "Quit Game (Q)";
 
-        StdDraw.text(width/2, (height/2) + 3, newGame);
-        StdDraw.text(width/2, height/2, loadGame);
-        StdDraw.text(width/2, (height/2) - 3, quitGame);
+        StdDraw.text(width / 2, (height / 2) + 3, newGame);
+        StdDraw.text(width / 2, height / 2, loadGame);
+        StdDraw.text(width / 2, (height / 2) - 3, quitGame);
         StdDraw.show();
     }
 
@@ -298,7 +310,7 @@ public class Engine {
             return "WALL";
         } else if (t.equals(Tileset.FLOOR)) {
             return "FLOOR";
-        } else if (t.equals(Tileset. NOTHING)) {
+        } else if (t.equals(Tileset.NOTHING)) {
             return "VOID";
         } else {
             return "???";
@@ -309,6 +321,9 @@ public class Engine {
     private boolean validateMouseCoor(Pos p) {
         return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
+
+
+
 }
 
 /**

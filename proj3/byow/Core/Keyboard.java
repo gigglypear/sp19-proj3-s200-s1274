@@ -2,9 +2,6 @@ package byow.Core;
 
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.util.Random;
 
 public class Keyboard {
 
@@ -12,19 +9,19 @@ public class Keyboard {
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
                 char letter = StdDraw.nextKeyTyped();
-                if(letter == 'N' || letter == 'n'){
+                if (letter == 'N' || letter == 'n') {
                     System.out.println("new game ");
                     System.out.println(letter);
                     return getSeed(letter);
 
-                } else if (letter == 'L' || letter == 'l'){
+                } else if (letter == 'L' || letter == 'l') {
                     System.out.println("load game");
                     return Character.toString(letter);
                     //load method
 
                 } else if (letter == ':') {
                     System.out.println("gotta figure out how to quit");
-                    while (true){
+                    while (true) {
                         if (StdDraw.hasNextKeyTyped()) {
                             char checkQ = StdDraw.nextKeyTyped();
                             if (checkQ == 'Q' || checkQ == 'q') {
@@ -38,7 +35,8 @@ public class Keyboard {
 
                 } else {
                     String input = Character.toString(letter).toLowerCase();
-                    if (input.equals("a") || input.equals("w") || input.equals("s") || input.equals("d")) {
+                    if (input.equals("a") || input.equals("w")
+                            || input.equals("s") || input.equals("d")) {
                         return input;
                     } else {
                         return "";
@@ -50,7 +48,6 @@ public class Keyboard {
     }
 
 
-
     private static String getSeed(char n) {
 
         StringBuilder allchars = new StringBuilder();
@@ -58,11 +55,11 @@ public class Keyboard {
 
         boolean noTerminate = true;
 
-        while(noTerminate){
-            if(StdDraw.hasNextKeyTyped()){
+        while (noTerminate) {
+            if (StdDraw.hasNextKeyTyped()) {
                 char number = StdDraw.nextKeyTyped();
                 System.out.println(number);
-                if(number == 'S' || number == 's'){
+                if (number == 'S' || number == 's') {
                     noTerminate = false;
                 }
                 allchars.append(number);
@@ -74,7 +71,6 @@ public class Keyboard {
 
         return input;
     }
-
 
 
 }
