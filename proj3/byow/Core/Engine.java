@@ -92,7 +92,14 @@ public class Engine {
 //                System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
-                ter.renderFrame(world);
+
+                if (world == null) {
+                    System.exit(0);
+                } else {
+                    ter.renderFrame(world);
+                }
+
+//                ter.renderFrame(world);
 
             }
 
@@ -157,7 +164,14 @@ public class Engine {
             return newGame(input);
 
         } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
-            return loadGame(input);
+
+            if (loadGame(input) == null) {
+                return null;
+            } else {
+                return loadGame(input);
+            }
+
+//            return loadGame(input);
 
         } else {
 
@@ -254,7 +268,8 @@ public class Engine {
         allStrokes = loading;
 
         if (allStrokes.length() == 0) {
-            System.exit(0);
+//            System.exit(0);
+            return null;
         }
 
         return newGame(loaded);
