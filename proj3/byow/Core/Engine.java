@@ -5,8 +5,17 @@ import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.BufferedReader;
+
 
 
 public class Engine {
@@ -79,7 +88,7 @@ public class Engine {
                 System.exit(0);
 
 
-            } else if (input.equals("r")){
+            } else if (input.equals("r")) {
                 replay();
 
             } else if (input.length() != 0) {

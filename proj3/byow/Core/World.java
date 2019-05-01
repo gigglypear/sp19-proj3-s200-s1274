@@ -4,7 +4,6 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-import javax.accessibility.AccessibleValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
