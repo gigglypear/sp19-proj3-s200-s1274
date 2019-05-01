@@ -19,6 +19,10 @@ public class Keyboard {
                     return Character.toString(letter);
                     //load method
 
+                } else if (letter == 'R' || letter == 'r') {
+                    System.out.println("replay last saved game");
+                    return Character.toString(letter).toLowerCase();
+
                 } else if (letter == ':') {
 //                    System.out.println("gotta figure out how to quit");
                     while (true) {
@@ -27,7 +31,7 @@ public class Keyboard {
                             if (checkQ == 'Q' || checkQ == 'q') {
                                 //quit and save method
 //                                System.out.println("really quit now");
-                                return ":Q";
+                                return ":q";
                             }
                             break;
                         }

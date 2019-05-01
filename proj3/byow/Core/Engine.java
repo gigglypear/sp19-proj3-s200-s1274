@@ -5,17 +5,8 @@ import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.Font;
-import java.awt.Color;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.io.File;
-import java.io.BufferedReader;
+import java.awt.*;
+import java.io.*;
 
 
 public class Engine {
@@ -79,7 +70,7 @@ public class Engine {
             String input = Keyboard.sollicitInput();
 
             System.out.println(input);
-            if (input.equals(":Q") || input.equals(":q")) {
+            if (input.equals(":q")) {
 
                 String saveStr = allStrokes.toString();
 
@@ -87,6 +78,9 @@ public class Engine {
                 quit = true;
                 System.exit(0);
 
+
+            } else if (input.equals("r")){
+                replay();
 
             } else if (input.length() != 0) {
 //                allStrokes.append(input);
@@ -259,8 +253,7 @@ public class Engine {
             return "";
         }
 
-
-        String newinput = loading + input.substring(1);
+        String newinput = loading.toString() + input.substring(1);
 
         return newinput;
     }
@@ -327,9 +320,58 @@ public class Engine {
 
     }
 
+
+    private void replay() {
+
+        String loadinput = loadGame("l");
+
+        int pointer = 0;
+        while (pointer < loadinput.length()) {
+            pointer++;
+            if (loadinput.charAt(pointer) == 's' || loadinput.charAt(pointer) == 'S') {
+                break;
+            }
+        }
+
+        String seedCopy = loadinput.substring(0, pointer + 1);
+
+        newGame(seedCopy);
+
+        ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        ter.renderFrame(world);
+
+        String strokeToPlay = loadinput.substring(pointer + 1);
+
+        while (strokeToPlay.length() != 0) {
+            StdDraw.pause(150);
+            String currStroke = strokeToPlay.substring(0, 1);
+            strokeToPlay = strokeToPlay.substring(1);
+            world = interactWithInputString(currStroke);
+            ter.renderFrame(world);
+        }
+
+//        System.out.println(pointer);
+
+//if there are more commands after "N#S",
+//        for(int i = pointer + 1; pointer < loadinput.length() - 1; i++){
+//            if(i + 1 != loadinput.length()){
+////                String next = loadinput.substring(i, (i + 1));
+//                System.out.println("next index: " + i);
+//                System.out.println(i);
+//            }
+////            interactWithInputString(next);
+//        }
+    }
+
     private boolean validateMouseCoor(Pos p) {
         return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
+
+//    public static void main(String[] args) {
+//        Engine engine = new Engine();
+//        engine.replay();
+//    }
 
 }
 
