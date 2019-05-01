@@ -1,7 +1,5 @@
 package byow.Core;
 
-import byow.TileEngine.TERenderer;
-import byow.TileEngine.TETile;
 
 /** This is the main entry point for the program. This class simply parses
  *  the command line inputs, and lets the byow.Core.Engine class take over
@@ -14,11 +12,11 @@ public class Main {
             System.exit(0);
         } else if (args.length == 1) {
             Engine engine = new Engine();
-            TERenderer ter = new TERenderer();
-            ter.initialize(80, 40);
-            TETile[][] world = engine.interactWithInputString(args[0]);
-            ter.renderFrame(world);
-//            engine.interactWithInputString(args[0]);
+//            TERenderer ter = new TERenderer();
+//            ter.initialize(80, 40);
+//            TETile[][] world = engine.interactWithInputString(args[0]);
+//            ter.renderFrame(world);
+            engine.interactWithInputString(args[0]);
             System.out.println(engine.toString());
         } else {
             Engine engine = new Engine();
