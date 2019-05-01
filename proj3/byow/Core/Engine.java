@@ -151,9 +151,9 @@ public class Engine {
 //            return loadGame(input);
 
             world = loadGame(input);
-            if (world == null) {
-                System.exit(0);
-            }
+//            if (world == null) {
+//                System.exit(0);
+//            }
             return world;
 
         } else {
