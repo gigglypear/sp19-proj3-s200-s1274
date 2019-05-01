@@ -152,51 +152,34 @@ public class Engine {
 
                 commandToProcess = loadGame(commandToProcess);
 //                allStrokes.append(input);
-
-            } else {
-
-//            for (int i = 0; i < input.length(); i++) {
-
-                if (commandToProcess.charAt(0) == 'w') {
-                    world = avatar.goUp(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 's') {
-                    world = avatar.goDown(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'a') {
-                    world = avatar.goLeft(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'd') {
-                    world = avatar.goRight(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'u') {
-                    world = avatar2.goUp(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'j') {
-                    world = avatar2.goDown(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'h') {
-                    world = avatar2.goLeft(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == 'k') {
-                    world = avatar2.goRight(world);
-                    allStrokes.append(commandToProcess.charAt(0));
-                    commandToProcess = commandToProcess.substring(1);
-                } else if (commandToProcess.charAt(0) == ':') {
-                    if (commandToProcess.charAt(1) == 'q') {
-                        saveGame(allStrokes.toString());
-                        commandToProcess = commandToProcess.substring(2);
+            } else if (commandToProcess.charAt(0) == ':') {
+                if (commandToProcess.charAt(1) == 'q') {
+                    saveGame(allStrokes.toString());
+                    commandToProcess = commandToProcess.substring(2);
 //                       System.out.println("this saved: " + allStrokes.toString());
 //                       break;
-                    }
                 }
+            } else {
+                //move
+                if (commandToProcess.charAt(0) == 'w') {
+                    world = avatar.goUp(world);
+                } else if (commandToProcess.charAt(0) == 's') {
+                    world = avatar.goDown(world);
+                } else if (commandToProcess.charAt(0) == 'a') {
+                    world = avatar.goLeft(world);
+                } else if (commandToProcess.charAt(0) == 'd') {
+                    world = avatar.goRight(world);
+                } else if (commandToProcess.charAt(0) == 'u') {
+                    world = avatar2.goUp(world);
+                } else if (commandToProcess.charAt(0) == 'j') {
+                    world = avatar2.goDown(world);
+                } else if (commandToProcess.charAt(0) == 'h') {
+                    world = avatar2.goLeft(world);
+                } else if (commandToProcess.charAt(0) == 'k') {
+                    world = avatar2.goRight(world);
+                }
+                allStrokes.append(commandToProcess.charAt(0));
+                commandToProcess = commandToProcess.substring(1);
 
             }
             if (commandToProcess.length() == 0) {
@@ -227,9 +210,6 @@ public class Engine {
 
         initialized = true;
 
-//        TERenderer ter = new TERenderer();
-//        ter.initialize(WIDTH, HEIGHT);
-
         world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
@@ -247,9 +227,6 @@ public class Engine {
         } else {
             commandToProcess = "";
         }
-
-//        ter.renderFrame(world);
-//        return world;
     }
 
     private String loadGame(String input) {
