@@ -159,7 +159,7 @@ public class Engine {
 //            return loadGame(input);
 
             String newinput = loadGame(input);
-            allStrokes.append(input);
+//            allStrokes.append(input);
             return interactWithInputString(newinput);
 
 
