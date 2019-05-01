@@ -300,11 +300,13 @@ public class Engine {
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.setFont(font);
 
+        String title = "CS61B: BYWOW";
         String newGame = "New Game (N)";
         String loadGame = "Load Game (L)";
         String quitGame = "Quit Game (Q)";
         String replayGame = "Replay Game (R)";
 
+        StdDraw.text(width/ 2, (height/2) + 6, title);
         StdDraw.text(width / 2, (height / 2) + 3, newGame);
         StdDraw.text(width / 2, height / 2, loadGame);
         StdDraw.text(width / 2, (height / 2) - 3, replayGame);
