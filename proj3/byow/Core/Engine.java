@@ -138,6 +138,12 @@ public class Engine {
 
 //        TETile[][] toLoad;
         if (input.length() == 0) {
+            world = new TETile[WIDTH][HEIGHT];
+            for (int x = 0; x < WIDTH; x += 1) {
+                for (int y = 0; y < HEIGHT; y += 1) {
+                    world[x][y] = Tileset.NOTHING;
+                }
+            }
             return world;
         } else if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
 //            allStrokes.append(input);
@@ -240,17 +246,17 @@ public class Engine {
 //        System.out.println("loading: " + loading);
 
 
-        try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(
-                    new FileWriter("./byow/core/save.txt", false)));
-            out.println("");
-            out.close();
-        } catch (IOException e) {
-            //exception handling left as an exercise for the reader
-            System.out.println("exception case triggered");
-        }
+//        try {
+//            PrintWriter out = new PrintWriter(new BufferedWriter(
+//                    new FileWriter("./byow/core/save.txt", false)));
+//            out.println("");
+//            out.close();
+//        } catch (IOException e) {
+//            //exception handling left as an exercise for the reader
+//            System.out.println("exception case triggered");
+//        }
 
-        if (!initialized) {
+        if (!initialized && loading.length() == 0) {
 //            System.exit(0);
             return "";
         }
@@ -324,7 +330,6 @@ public class Engine {
     private boolean validateMouseCoor(Pos p) {
         return (p.x < WIDTH && p.x >= 0 && p.y < HEIGHT && p.y >= 0);
     }
-
 
 }
 
