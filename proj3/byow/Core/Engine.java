@@ -93,7 +93,7 @@ public class Engine {
 
             } else if (input.length() != 0) {
 //                allStrokes.append(input);
-                System.out.println("curr string: " + allStrokes);
+//                System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
 
