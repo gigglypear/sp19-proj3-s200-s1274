@@ -88,7 +88,7 @@ public class Engine {
 
 
             } else if (input.length() != 0) {
-                allStrokes.append(input);
+//                allStrokes.append(input);
                 System.out.println("curr string: " + allStrokes);
 
                 world = interactWithInputString(input);
@@ -190,6 +190,7 @@ public class Engine {
 
     private TETile[][] newGame(String input) {
 
+        allStrokes = new StringBuilder();
         int pointer = 0;
         while (pointer < input.length()) {
             pointer++;
@@ -207,6 +208,9 @@ public class Engine {
 
         initialized = true;
 
+        TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+
         world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
@@ -223,6 +227,7 @@ public class Engine {
             interactWithInputString(rest);
         }
 
+        ter.renderFrame(world);
         return world;
     }
 
