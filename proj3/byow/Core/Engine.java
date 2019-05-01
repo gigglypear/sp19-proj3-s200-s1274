@@ -208,8 +208,8 @@ public class Engine {
 
         initialized = true;
 
-        TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
+//        TERenderer ter = new TERenderer();
+//        ter.initialize(WIDTH, HEIGHT);
 
         world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
@@ -227,7 +227,7 @@ public class Engine {
             interactWithInputString(rest);
         }
 
-        ter.renderFrame(world);
+//        ter.renderFrame(world);
         return world;
     }
 
