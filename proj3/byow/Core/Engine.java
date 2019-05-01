@@ -24,7 +24,6 @@ public class Engine {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
     protected long seed;
-    protected String command;
 
     private int width;
     private int height;
@@ -34,6 +33,7 @@ public class Engine {
     private World newworld;
     private TETile[][] world;
     private Avatar avatar;
+    private Avatar avatar2;
 //    private String input;
 
     private Pos mouseCood;
@@ -153,7 +153,6 @@ public class Engine {
                 commandToProcess = loadGame(commandToProcess);
 //                allStrokes.append(input);
 
-
             } else {
 
 //            for (int i = 0; i < input.length(); i++) {
@@ -172,6 +171,22 @@ public class Engine {
                     commandToProcess = commandToProcess.substring(1);
                 } else if (commandToProcess.charAt(0) == 'd') {
                     world = avatar.goRight(world);
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'u') {
+                    world = avatar2.goUp(world);
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'j') {
+                    world = avatar2.goDown(world);
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'h') {
+                    world = avatar2.goLeft(world);
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'k') {
+                    world = avatar2.goRight(world);
                     allStrokes.append(commandToProcess.charAt(0));
                     commandToProcess = commandToProcess.substring(1);
                 } else if (commandToProcess.charAt(0) == ':') {
@@ -224,6 +239,7 @@ public class Engine {
 
         world = newworld.generateWorld(world);
         avatar = newworld.avatar;
+        avatar2 = newworld.avatar2;
 
         //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
@@ -319,7 +335,9 @@ public class Engine {
     private String mouseOver(Pos p) {
         TETile t = world[p.x][p.y];
         if (t.equals(Tileset.AVATAR)) {
-            return "Avatar";
+            return "PLAYER1";
+        } else if (t.equals(Tileset.AVATAR2)) {
+            return "PLAYER2";
         } else if (t.equals(Tileset.WALL)) {
             return "WALL";
         } else if (t.equals(Tileset.FLOOR)) {

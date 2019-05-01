@@ -4,6 +4,7 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import javax.accessibility.AccessibleValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ public class World {
     private int overlapTries;
 
     protected Avatar avatar;
+    protected Avatar avatar2;
 
     public World(long seed) {
         allRooms = new ArrayList<>();
@@ -63,14 +65,13 @@ public class World {
 //        int maxRms = 6; /**hard code for now; CHANGE*/
         Room currRm = initRm;
 
-        while (maxRms != totalRms + 1) {
+        while (maxRms != totalRms) {
             Room rmToConnect = Room.roomGenerator(world, RANDOM);
 
             while (rmToConnect.overlap(allRooms) && overlapTries < 6) {
                 rmToConnect = Room.roomGenerator(world, RANDOM);
                 overlapTries += 1;
             }
-
 
             rmToConnect.draw(world, Tileset.FLOOR);
             allRooms.add(rmToConnect);
@@ -81,7 +82,6 @@ public class World {
             openFringe.add(endOpen);
 
             Pos startOpen = openRm.get(currRm);
-
 
             World.connect(world, startOpen, endOpen, currRm);
 
@@ -97,7 +97,8 @@ public class World {
         }
 
         Room firstRm = allRooms.get(0);
-        this.putAvatar(firstRm, world, RANDOM);
+        this.putAvatar(firstRm, world, RANDOM, 1);
+        this.putAvatar(allRooms.get(maxRms - 1), world, RANDOM, 2);
 
         return world;
 
@@ -138,15 +139,20 @@ public class World {
      * @param world
      * @param rand
      */
-    protected void putAvatar(Room r, TETile[][] world, Random rand) {
+    protected void putAvatar(Room r, TETile[][] world, Random rand, int number) {
         Pos rStart = r.getStartP();
         Pos rEnd = r.getEndP();
 
         int x = rand.nextInt(rEnd.x - rStart.x - 1) + rStart.x + 1;
         int y = rand.nextInt(rEnd.y - rStart.y - 1) + rStart.y + 1;
         Pos avatarLoc = new Pos(x, y);
-        this.avatar = new Avatar(avatarLoc);
-        world[x][y] = Tileset.AVATAR;
+        if (number == 1) {
+            this.avatar = new Avatar(avatarLoc, Tileset.AVATAR);
+            world[x][y] = Tileset.AVATAR;
+        } else {
+            this.avatar2 = new Avatar(avatarLoc, Tileset.AVATAR2);
+            world[x][y] = Tileset.AVATAR2;
+        }
     }
 
 

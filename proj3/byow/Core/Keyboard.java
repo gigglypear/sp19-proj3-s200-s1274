@@ -35,8 +35,9 @@ public class Keyboard {
 
                 } else {
                     String input = Character.toString(letter).toLowerCase();
-                    if (input.equals("a") || input.equals("w")
-                            || input.equals("s") || input.equals("d")) {
+                    if (input.equals("a") || input.equals("w") || input.equals("s")
+                            || input.equals("d") || input.equals("u") || input.equals("j")
+                            || input.equals("h") || input.equals("k")) {
                         return input;
                     } else {
                         return "";

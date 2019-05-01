@@ -6,15 +6,17 @@ import byow.TileEngine.Tileset;
 public class Avatar {
 
     private Pos location;
+    private TETile t;
 
-    public Avatar(Pos loc) {
+    public Avatar(Pos loc, TETile tile) {
         location = loc;
+        t = tile;
     }
 
     protected TETile[][] goUp(TETile[][] world) {
         if (world[location.x][location.y + 1] != Tileset.WALL) {
             world[location.x][location.y] = Tileset.FLOOR;
-            world[location.x][location.y + 1] = Tileset.AVATAR;
+            world[location.x][location.y + 1] = t;
             location = new Pos(location.x, location.y + 1);
         }
 
@@ -24,7 +26,7 @@ public class Avatar {
     protected TETile[][] goDown(TETile[][] world) {
         if (world[location.x][location.y - 1] != Tileset.WALL) {
             world[location.x][location.y] = Tileset.FLOOR;
-            world[location.x][location.y - 1] = Tileset.AVATAR;
+            world[location.x][location.y - 1] = t;
             location = new Pos(location.x, location.y - 1);
         }
 
@@ -36,7 +38,7 @@ public class Avatar {
 
         if (world[location.x - 1][location.y] != Tileset.WALL) {
             world[location.x][location.y] = Tileset.FLOOR;
-            world[location.x - 1][location.y] = Tileset.AVATAR;
+            world[location.x - 1][location.y] = t;
             location = new Pos(location.x - 1, location.y);
         }
 
@@ -47,7 +49,7 @@ public class Avatar {
     protected TETile[][] goRight(TETile[][] world) {
         if (world[location.x + 1][location.y] != Tileset.WALL) {
             world[location.x][location.y] = Tileset.FLOOR;
-            world[location.x + 1][location.y] = Tileset.AVATAR;
+            world[location.x + 1][location.y] = t;
             location = new Pos(location.x + 1, location.y);
         }
 
