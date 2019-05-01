@@ -29,6 +29,7 @@ public class Engine {
     private int width;
     private int height;
 
+    private String commandToProcess;
     private TERenderer ter;
     private World newworld;
     private TETile[][] world;
@@ -133,23 +134,14 @@ public class Engine {
      */
     public TETile[][] interactWithInputString(String input) {
 
-//        world = new TETile[1][1];
-//        world[0][0] = Tileset.NOTHING;
-
-//        TETile[][] toLoad;
-        if (input.length() == 0) {
-            world = new TETile[WIDTH][HEIGHT];
-            for (int x = 0; x < WIDTH; x += 1) {
-                for (int y = 0; y < HEIGHT; y += 1) {
-                    world[x][y] = Tileset.NOTHING;
-                }
-            }
-            return world;
-        } else if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
+        commandToProcess = input.toLowerCase();
+        boolean terminate = false;
+        while (!terminate) {
+            if (commandToProcess.charAt(0) == 'n') {
 //            allStrokes.append(input);
-            return newGame(input);
+                newGame(commandToProcess);
 
-        } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
+            } else if (commandToProcess.charAt(0) == 'l') {
 
 //            if (loadGame(input) == null) {
 //                System.exit(0);
@@ -158,38 +150,49 @@ public class Engine {
 //            System.out.println("went to load game");
 //            return loadGame(input);
 
-            String newinput = loadGame(input);
-            allStrokes.append(input);
-            return interactWithInputString(newinput);
+                commandToProcess = loadGame(commandToProcess);
+//                allStrokes.append(input);
 
 
-        } else {
+            } else {
 
-            for (int i = 0; i < input.length(); i++) {
-                if (input.charAt(i) == 'W' || input.charAt(i) == 'w') {
+//            for (int i = 0; i < input.length(); i++) {
+
+                if (commandToProcess.charAt(0) == 'w') {
                     world = avatar.goUp(world);
-                } else if (input.charAt(i) == 'S' || input.charAt(i) == 's') {
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 's') {
                     world = avatar.goDown(world);
-                } else if (input.charAt(i) == 'A' || input.charAt(i) == 'a') {
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'a') {
                     world = avatar.goLeft(world);
-                } else if (input.charAt(i) == 'D' || input.charAt(i) == 'd') {
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == 'd') {
                     world = avatar.goRight(world);
-                } else if (input.charAt(i) == ':') {
-                    if (input.charAt(i + 1) == 'q' || input.charAt(i + 1) == 'Q') {
+                    allStrokes.append(commandToProcess.charAt(0));
+                    commandToProcess = commandToProcess.substring(1);
+                } else if (commandToProcess.charAt(0) == ':') {
+                    if (commandToProcess.charAt(1) == 'q') {
                         saveGame(allStrokes.toString());
-//                        System.out.println("this saved: " + allStrokes.toString());
-                        break;
+                        commandToProcess = commandToProcess.substring(2);
+//                       System.out.println("this saved: " + allStrokes.toString());
+//                       break;
                     }
                 }
-                allStrokes.append(input.charAt(i));
+
             }
-//            ter.renderFrame(world);
-            return world;
+            if (commandToProcess.length() == 0) {
+                terminate = true;
+            }
         }
+        return world;
     }
 
 
-    private TETile[][] newGame(String input) {
+    private void newGame(String input) {
 
         allStrokes = new StringBuilder();
         int pointer = 0;
@@ -224,12 +227,13 @@ public class Engine {
 
         //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
-            String rest = input.substring(pointer + 1);
-            interactWithInputString(rest);
+            commandToProcess = input.substring(pointer + 1);
+        } else {
+            commandToProcess = "";
         }
 
 //        ter.renderFrame(world);
-        return world;
+//        return world;
     }
 
     private String loadGame(String input) {
@@ -252,18 +256,13 @@ public class Engine {
 //        System.out.println("loading: " + loading);
 
 
-//        try {
-//            PrintWriter out = new PrintWriter(new BufferedWriter(
-//                    new FileWriter("./byow/core/save.txt", false)));
-//            out.println("");
-//            out.close();
-//        } catch (IOException e) {
-//            //exception handling left as an exercise for the reader
-//            System.out.println("exception case triggered");
-//        }
-
         if (!initialized && loading.length() == 0) {
-//            System.exit(0);
+            world = new TETile[WIDTH][HEIGHT];
+            for (int x = 0; x < WIDTH; x += 1) {
+                for (int y = 0; y < HEIGHT; y += 1) {
+                    world[x][y] = Tileset.NOTHING;
+                }
+            }
             return "";
         }
 
