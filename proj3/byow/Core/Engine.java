@@ -240,7 +240,7 @@ public class Engine {
                     new FileInputStream(new File("./save.txt"))));
             String line = "";
             while ((line = fr.readLine()) != null) {
-                System.out.println("from txt file: " + line);
+//                System.out.println("from txt file: " + line);
                 loading.append(line);
             }
         } catch (IOException e) {
