@@ -33,7 +33,7 @@ public class Engine {
     private World newworld;
     private TETile[][] world;
     private Avatar avatar;
-    private String input;
+//    private String input;
 
     private Pos mouseCood;
     private boolean initialized;
@@ -75,7 +75,7 @@ public class Engine {
                 }
             }
 
-            input = Keyboard.sollicitInput();
+            String input = Keyboard.sollicitInput();
 
             System.out.println(input);
             if (input.equals(":Q") || input.equals(":q")) {
@@ -138,17 +138,23 @@ public class Engine {
 
         TETile[][] toLoad;
         if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
-            allStrokes.append(input);
+//            allStrokes.append(input);
             return newGame(input);
 
         } else if ((input.charAt(0) == 'L') || input.charAt(0) == 'l') {
 
-            if (loadGame() == null) {
+//            if (loadGame(input) == null) {
+//                System.exit(0);
+//            }
+////            System.out.println("input passed into loadGame: " + input);
+//            System.out.println("went to load game");
+//            return loadGame(input);
+
+            world = loadGame(input);
+            if (world == null) {
                 System.exit(0);
             }
-//            System.out.println("input passed into loadGame: " + input);
-            System.out.println("went to load game");
-            return loadGame();
+            return world;
 
         } else {
 
@@ -168,6 +174,7 @@ public class Engine {
                         break;
                     }
                 }
+                allStrokes.append(input.charAt(i));
             }
 //            ter.renderFrame(world);
             return world;
@@ -176,7 +183,7 @@ public class Engine {
 
 
     private TETile[][] newGame(String input) {
-        command = input;
+
         int pointer = 0;
         while (pointer < input.length()) {
             pointer++;
@@ -184,9 +191,13 @@ public class Engine {
                 break;
             }
         }
-        seed = Long.parseLong(input.substring(1, pointer - 1));
+        seed = Long.parseLong(input.substring(1, pointer));
 
         newworld = new World(seed);
+
+        allStrokes.append("n");
+        allStrokes.append(seed);
+        allStrokes.append("s");
 
         initialized = true;
 
@@ -209,7 +220,7 @@ public class Engine {
         return world;
     }
 
-    private TETile[][] loadGame() {
+    private TETile[][] loadGame(String input) {
         StringBuilder loading = new StringBuilder();
 
         try {
@@ -224,17 +235,18 @@ public class Engine {
             System.out.println("exception case triggered for load");
         }
 
-        String loaded = loading.toString();
-        allStrokes = loading;
+
+//        allStrokes = loading;
 //        System.out.println("loading: " + loading);
 
-        if (allStrokes.length() == 0) {
+        if (loading.length() == 0) {
 //            System.exit(0);
-
             return null;
         }
 
-        return newGame(loaded);
+        String newinput = loading + input;
+
+        return newGame(newinput);
     }
 
 
