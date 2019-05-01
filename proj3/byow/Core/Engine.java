@@ -93,8 +93,8 @@ public class Engine {
 
                 world = interactWithInputString(input);
 
-                if (world == null) {
-//                    System.exit(0);
+                if (!initialized) {
+                    System.exit(0);
                     return;
                 } else {
                     ter.renderFrame(world);
@@ -136,8 +136,10 @@ public class Engine {
 //        world = new TETile[1][1];
 //        world[0][0] = Tileset.NOTHING;
 
-        TETile[][] toLoad;
-        if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
+//        TETile[][] toLoad;
+        if (input == null){
+            return world;
+        } else if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
 //            allStrokes.append(input);
             return newGame(input);
 
@@ -150,11 +152,9 @@ public class Engine {
 //            System.out.println("went to load game");
 //            return loadGame(input);
 
-            world = loadGame(input);
-//            if (world == null) {
-//                System.exit(0);
-//            }
-            return world;
+            String newinput = loadGame(input);
+            return interactWithInputString(newinput);
+
 
         } else {
 
@@ -220,7 +220,7 @@ public class Engine {
         return world;
     }
 
-    private TETile[][] loadGame(String input) {
+    private String loadGame(String input) {
         StringBuilder loading = new StringBuilder();
 
         try {
@@ -244,9 +244,9 @@ public class Engine {
             return null;
         }
 
-        String newinput = loading + input;
+        String newinput = loading + input.substring(1);
 
-        return newGame(newinput);
+        return newinput;
     }
 
 
