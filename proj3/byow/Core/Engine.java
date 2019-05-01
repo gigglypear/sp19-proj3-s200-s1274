@@ -237,7 +237,7 @@ public class Engine {
 
         try {
             BufferedReader fr = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(new File("./byow/core/save.txt"))));
+                    new FileInputStream(new File("./save.txt"))));
             String line = "";
             while ((line = fr.readLine()) != null) {
                 System.out.println("from txt file: " + line);
@@ -271,7 +271,7 @@ public class Engine {
     private void saveGame(String string) {
         try {
             PrintWriter out = new PrintWriter(new BufferedWriter(
-                    new FileWriter("./byow/core/save.txt", false)));
+                    new FileWriter("./save.txt", false)));
             out.println(string);
             out.close();
         } catch (IOException e) {
@@ -308,7 +308,7 @@ public class Engine {
         StdDraw.text(width / 2, (height / 2) + 3, newGame);
         StdDraw.text(width / 2, height / 2, loadGame);
         StdDraw.text(width / 2, (height / 2) - 3, replayGame);
-        StdDraw.text(width/ 2, (height/2) - 6, quitGame);
+        StdDraw.text(width / 2, (height / 2) - 6, quitGame);
         StdDraw.show();
     }
 
