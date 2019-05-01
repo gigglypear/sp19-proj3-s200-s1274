@@ -137,7 +137,7 @@ public class Engine {
 //        world[0][0] = Tileset.NOTHING;
 
 //        TETile[][] toLoad;
-        if (input == null){
+        if (input.length() == 0) {
             return world;
         } else if ((input.charAt(0) == 'N' || input.charAt(0) == 'n')) {
 //            allStrokes.append(input);
@@ -170,7 +170,7 @@ public class Engine {
                 } else if (input.charAt(i) == ':') {
                     if (input.charAt(i + 1) == 'q' || input.charAt(i + 1) == 'Q') {
                         saveGame(allStrokes.toString());
-                        System.out.println("this saved: " + allStrokes.toString());
+//                        System.out.println("this saved: " + allStrokes.toString());
                         break;
                     }
                 }
@@ -239,10 +239,22 @@ public class Engine {
 //        allStrokes = loading;
 //        System.out.println("loading: " + loading);
 
-        if (loading.length() == 0) {
-//            System.exit(0);
-            return null;
+
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(
+                    new FileWriter("./byow/core/save.txt", false)));
+            out.println("");
+            out.close();
+        } catch (IOException e) {
+            //exception handling left as an exercise for the reader
+            System.out.println("exception case triggered");
         }
+
+        if (!initialized) {
+//            System.exit(0);
+            return "";
+        }
+
 
         String newinput = loading + input.substring(1);
 
