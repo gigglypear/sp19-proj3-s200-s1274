@@ -303,10 +303,12 @@ public class Engine {
         String newGame = "New Game (N)";
         String loadGame = "Load Game (L)";
         String quitGame = "Quit Game (Q)";
+        String replayGame = "Replay Game (R)";
 
         StdDraw.text(width / 2, (height / 2) + 3, newGame);
         StdDraw.text(width / 2, height / 2, loadGame);
-        StdDraw.text(width / 2, (height / 2) - 3, quitGame);
+        StdDraw.text(width / 2, (height / 2) - 3, replayGame);
+        StdDraw.text(width/ 2, (height/2) - 6, quitGame);
         StdDraw.show();
     }
 
