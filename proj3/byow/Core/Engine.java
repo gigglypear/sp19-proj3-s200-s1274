@@ -630,7 +630,7 @@ public class Engine {
         StdDraw.text(width / 2, height / 2, line2);
 
         StdDraw.show();
-        StdDraw.pause(1000);
+        StdDraw.pause(5000);
     }
 
 }
