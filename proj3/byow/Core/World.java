@@ -29,6 +29,8 @@ public class World {
     protected Avatar avatar;
     protected Avatar avatar2;
     protected Pos treasureBox;
+    protected Pos bomb;
+    protected Pos surprise;
 
     public World(long seed) {
         allRooms = new ArrayList<>();
@@ -100,6 +102,8 @@ public class World {
         this.putAvatar(firstRm, world, RANDOM, 1);
         this.putAvatar(allRooms.get(maxRms - 1), world, RANDOM, 2);
         treasureBox = putTreasureBox(allRooms.get(maxRms - 2), world, RANDOM);
+        bomb = putBomb(treasureBox, world);
+        surprise = putSurprise(treasureBox, world);
         return world;
 
 
@@ -168,6 +172,27 @@ public class World {
         return treasure;
     }
 
+    protected Pos putBomb (Pos treasure, TETile[][] world) {
+        int x = treasure.x;
+        int y = treasure.y - 1;
+
+        Pos bomb = new Pos(x, y);
+
+//        world[x][y] = Tileset.BOMB;
+
+        return bomb;
+    }
+
+    protected Pos putSurprise (Pos treasure, TETile[][] world) {
+        int x = treasure.x - 1;
+        int y = treasure.y;
+
+        Pos surprise = new Pos(x, y);
+
+        world[x][y] = Tileset.SURPRISE;
+
+        return surprise;
+    }
 
 
     public static void main(String[] args) {

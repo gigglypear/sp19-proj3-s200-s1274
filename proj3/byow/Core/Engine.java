@@ -35,6 +35,7 @@ public class Engine {
     private Avatar avatar;
     private Avatar avatar2;
     private Pos treasureBox;
+    private Pos bomb;
 //    private String input;
 
     private Pos mouseCood;
@@ -189,6 +190,18 @@ public class Engine {
                 allStrokes.append(commandToProcess.charAt(0));
                 commandToProcess = commandToProcess.substring(1);
 
+                if (validateBombDis() == 1)  {
+                    drawWarning(1);
+                } else if (validateBombDis() == 2) {
+                    drawWarning(2);
+                }
+
+                if (validateBomb() == 1)  {
+                    drawBomb(1);
+                } else if (validateBomb() == 2) {
+                    drawBomb(2);
+                }
+
                 if (validatewin() == 1) {
                     drawWinnerWindow(1);
                 } else if (validatewin() == 2) {
@@ -235,6 +248,7 @@ public class Engine {
         avatar = newworld.avatar;
         avatar2 = newworld.avatar2;
         treasureBox = newworld.treasureBox;
+        bomb = newworld.bomb;
 
         //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
@@ -393,7 +407,37 @@ public class Engine {
         } else if (avatar2.location.x == treasureBox.x && avatar2.location.y == treasureBox.y) {
             return 2;
         }
+        if (avatar.getCalories() <= 0) {
+            return 2;
+        } else if (avatar2.getCalories() <= 0) {
+            return 1;
+        }
 
+        return 0;
+    }
+
+    private int validateBombDis() {
+
+        if (Math.abs(avatar.location.x - treasureBox.x) <= 2 && Math.abs(avatar.location.y - treasureBox.y) <= 2) {
+            return 1;
+
+        } else if (Math.abs(avatar2.location.x - treasureBox.x) == 2 && Math.abs(avatar2.location.y - treasureBox.y) == 2) {
+            return 2;
+        }
+        return 0;
+    }
+
+    private int validateBomb() {
+        if (avatar.location.x == bomb.x && avatar.location.y == bomb.y) {
+            avatar.totalCalories -= 50;
+            world[avatar.location.x][avatar.location.y] = Tileset.BOMB;
+            return 1;
+
+        } else if (avatar2.location.x == bomb.x && avatar2.location.y == bomb.y) {
+            avatar2.totalCalories -= 50;
+            world[avatar2.location.x][avatar2.location.y] = Tileset.BOMB;
+            return 2;
+        }
         return 0;
     }
 
@@ -511,6 +555,80 @@ public class Engine {
         StdDraw.show();
         StdDraw.pause(10000);
         System.exit(0);
+    }
+
+    public void drawBomb(int player){
+        StdDraw.clear(Color.BLACK);
+
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+        StdDraw.setPenColor(StdDraw.YELLOW);
+        StdDraw.setFont(font);
+
+        String line1;
+        String line2;
+
+        if (player == 1) {
+            line1 = "Aang encountered a bomb!";
+            line2 = "Aang loses 50 calories :(";
+        } else {
+            line1 = "Katara encountered a bomb!";
+            line2 = "Katara loses 50 calories :(";
+        }
+
+
+
+        StdDraw.text(width / 2, (height / 2) + 3, line1);
+        StdDraw.text(width / 2, height / 2, line2);
+
+        StdDraw.show();
+        StdDraw.pause(2000);
+    }
+
+    private void drawWarning (int player) {
+        StdDraw.clear(Color.BLACK);
+
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+        StdDraw.setPenColor(StdDraw.YELLOW);
+        StdDraw.setFont(font);
+
+        String line1;
+        String line2 = "Be careful there is a bomb nearby.";
+
+        if (player == 1) {
+            line1 = "Aang is approaching the treasure!";
+
+        } else {
+            line1 = "Katara is approaching the treasure!";
+
+        }
+
+
+
+        StdDraw.text(width / 2, (height / 2) + 3, line1);
+        StdDraw.text(width / 2, height / 2, line2);
+
+        StdDraw.show();
+        StdDraw.pause(1000);
     }
 
 }

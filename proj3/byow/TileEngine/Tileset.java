@@ -20,6 +20,8 @@ public class Tileset {
     public static final TETile AVATAR = new TETile('@', Color.white, Color.black, "player1");
     public static final TETile AVATAR2 = new TETile('@', Color.yellow, Color.black, "player2");
     public static final TETile TREASURE = new TETile('$', Color.cyan, Color.black, "treasurebox");
+    public static final TETile BOMB = new TETile('*', Color.black, Color.red, "bomb");
+    public static final TETile SURPRISE = new TETile('☺', Color.orange, Color.black, "surpirse");
 
     public static final TETile WALL = new TETile('#', new Color(216, 128, 128), Color.darkGray,
             "wall");
@@ -36,6 +38,8 @@ public class Tileset {
     public static final TETile SAND = new TETile('▒', Color.yellow, Color.black, "sand");
     public static final TETile MOUNTAIN = new TETile('▲', Color.gray, Color.black, "mountain");
     public static final TETile TREE = new TETile('♠', Color.green, Color.black, "tree");
+
+
 }
 
 
