@@ -456,8 +456,8 @@ public class Engine {
         String line3 = "The random worlds are generated using an algorithm iteration haters would despise, but";
         String line4 = "hey at least a proper world should generate. There are two avatars in the game, so";
         String line5 = "two people can play. Journey together through the world, it's not that hard. But just";
-        String line6 = "try not to hit the walls. Winning isn't that hard in this game, just move. Both players";
-        String line7 = "will win, because like this project, this game is a partnership.";
+        String line6 = "try not to hit the walls. Winning isn't that hard in this game, just move and get the";
+        String line7 = "$$$. May the fourth be with you, because on the fifth you can't play anymore :)";
         String line8 = "~~~  ~~~  ~~~";
         String line9 = "New Game (N) | Load Game (L) | Replay (R) | Quit (Q)";
 
