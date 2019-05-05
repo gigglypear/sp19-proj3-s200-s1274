@@ -5,6 +5,7 @@ import byow.TileEngine.Tileset;
 
 public class Avatar {
 
+    public int totalCalories = 0;
     private Pos location;
     private TETile t;
 
@@ -18,6 +19,8 @@ public class Avatar {
             world[location.x][location.y] = Tileset.FLOOR;
             world[location.x][location.y + 1] = t;
             location = new Pos(location.x, location.y + 1);
+        } else{
+            totalCalories += 1;
         }
 
         return world;
@@ -28,6 +31,8 @@ public class Avatar {
             world[location.x][location.y] = Tileset.FLOOR;
             world[location.x][location.y - 1] = t;
             location = new Pos(location.x, location.y - 1);
+        } else{
+            totalCalories += 1;
         }
 
         return world;
@@ -40,6 +45,8 @@ public class Avatar {
             world[location.x][location.y] = Tileset.FLOOR;
             world[location.x - 1][location.y] = t;
             location = new Pos(location.x - 1, location.y);
+        } else{
+            totalCalories += 1;
         }
 
         return world;
@@ -51,8 +58,14 @@ public class Avatar {
             world[location.x][location.y] = Tileset.FLOOR;
             world[location.x + 1][location.y] = t;
             location = new Pos(location.x + 1, location.y);
+        } else{
+            totalCalories += 1;
         }
 
         return world;
+    }
+
+    public int getCalories(){
+        return totalCalories;
     }
 }

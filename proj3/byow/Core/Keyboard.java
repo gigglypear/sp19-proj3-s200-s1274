@@ -23,6 +23,9 @@ public class Keyboard {
                     System.out.println("replay last saved game");
                     return Character.toString(letter).toLowerCase();
 
+                } else if (letter == 'B' || letter == 'b'){
+                    System.out.println("going to the lore");
+                    return Character.toString(letter).toLowerCase();
                 } else if (letter == ':') {
 //                    System.out.println("gotta figure out how to quit");
                     while (true) {
@@ -75,7 +78,6 @@ public class Keyboard {
 //        System.out.println(input);
 
         return input;
-        
     }
 
 

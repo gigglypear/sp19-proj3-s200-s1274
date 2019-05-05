@@ -39,6 +39,9 @@ public class Engine {
     private Pos mouseCood;
     private boolean initialized;
     private String tiletype;
+    private String tileblurb;
+    private int health;
+    private int health2;
 
     private StringBuilder allStrokes = new StringBuilder();
 
@@ -65,11 +68,17 @@ public class Engine {
 //                    System.out.println(mouseCood.x + " , " + mouseCood.y);
                     if (validateMouseCoor(mouseCood)) {
                         tiletype = mouseOver(mouseCood);
+                        tileblurb = tileText(mouseCood);
+                        health = avatar.getCalories();
+                        health2 = avatar2.getCalories();
 //                        System.out.println(tiletype);
                         Font fonthud = new Font("Monaco", Font.BOLD, 14);
                         StdDraw.setPenColor(StdDraw.YELLOW);
                         StdDraw.setFont(fonthud);
                         StdDraw.text(2, HEIGHT - 2, tiletype);
+                        StdDraw.text(17, HEIGHT - 4, tileblurb);
+                        StdDraw.text(65, HEIGHT -2, "Aang's Calories: " + health);
+                        StdDraw.text(65, HEIGHT - 4, "Katara's Calories: " + health2);
                         StdDraw.show();
 
                     }
@@ -91,6 +100,8 @@ public class Engine {
             } else if (input.equals("r")) {
                 replay();
 
+            } else if (input.equals("b")){
+                drawBackgroundWindow();
             } else if (input.length() != 0) {
 //                allStrokes.append(input);
 //                System.out.println("curr string: " + allStrokes);
@@ -145,13 +156,6 @@ public class Engine {
                 newGame(commandToProcess);
 
             } else if (commandToProcess.charAt(0) == 'l') {
-
-//            if (loadGame(input) == null) {
-//                System.exit(0);
-//            }
-////            System.out.println("input passed into loadGame: " + input);
-//            System.out.println("went to load game");
-//            return loadGame(input);
 
                 commandToProcess = loadGame(commandToProcess);
 //                allStrokes.append(input);
@@ -281,38 +285,6 @@ public class Engine {
 
     }
 
-    public void drawWelcomeWindow() {
-
-//        edu.princeton.cs.algs4.StdDraw.clear();
-
-        this.width = WIDTH;
-        this.height = HEIGHT;
-
-        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
-        Font font = new Font("Monaco", Font.BOLD, 30);
-        StdDraw.setFont(font);
-        StdDraw.setXscale(0, this.width);
-        StdDraw.setYscale(0, this.height);
-        StdDraw.clear(Color.BLACK);
-        StdDraw.enableDoubleBuffering();
-
-//        Font font = new Font("Arial", Font.BOLD, 30);
-        StdDraw.setPenColor(StdDraw.WHITE);
-        StdDraw.setFont(font);
-
-        String title = "CS61B: BYWOW";
-        String newGame = "New Game (N)";
-        String loadGame = "Load Game (L)";
-        String quitGame = "Quit Game (Q)";
-        String replayGame = "Replay Game (R)";
-
-        StdDraw.text(width/ 2, (height/2) + 6, title);
-        StdDraw.text(width / 2, (height / 2) + 3, newGame);
-        StdDraw.text(width / 2, height / 2, loadGame);
-        StdDraw.text(width / 2, (height / 2) - 3, replayGame);
-        StdDraw.text(width / 2, (height / 2) - 6, quitGame);
-        StdDraw.show();
-    }
 
 
     private String mouseOver(Pos p) {
@@ -331,6 +303,23 @@ public class Engine {
             return "???";
         }
 
+    }
+
+    private String tileText(Pos p){
+        TETile t = world[p.x][p.y];
+        if (t.equals(Tileset.AVATAR)) {
+            return "Aang";
+        } else if (t.equals(Tileset.AVATAR2)) {
+            return "Katara";
+        } else if (t.equals(Tileset.WALL)) {
+            return "A wall tile is a hash tag and multiple wall tiles are a hash set";
+        } else if (t.equals(Tileset.FLOOR)) {
+            return "To floor or to ceiling? #rendering problems";
+        } else if (t.equals(Tileset.NOTHING)) {
+            return "public static void or just public void?";
+        } else {
+            return "idk sorry";
+        }
     }
 
 
@@ -385,6 +374,109 @@ public class Engine {
 //        Engine engine = new Engine();
 //        engine.replay();
 //    }
+
+    public void drawWelcomeWindow() {
+
+//        edu.princeton.cs.algs4.StdDraw.clear();
+
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+//        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.setFont(font);
+
+        String title = "CS61B: BYWOW";
+        String newGame = "New Game (N)";
+        String loadGame = "Load Game (L)";
+        String replayGame = "Replay Game (R)";
+        String quitGame = "Quit Game (Q)";
+        String lore = "Lore (B)";
+
+
+        StdDraw.text(width/ 2, (height/2) + 6, title);
+        StdDraw.text(width / 2, (height / 2) + 3, newGame);
+        StdDraw.text(width / 2, height / 2, loadGame);
+        StdDraw.text(width/2, (height/2) - 3, lore);
+        StdDraw.text(width / 2, (height / 2) - 6, replayGame);
+        StdDraw.text(width / 2, (height / 2) - 9, quitGame);
+        StdDraw.show();
+    }
+
+    public void drawBackgroundWindow(){
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 16);
+        //^^ previously size = 30; not sure if messes up game font, doesn't seem to be
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+//        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setPenColor(StdDraw.WHITE);
+        StdDraw.setFont(font);
+
+        String header = "~~~THE LORE~~~";
+        String line1 = "Once upon a time, two students decided to test the limits of their abilities by taking";
+        String line2 = "CS 61B. In the process, this game was created with the motto 'sometimes less is more.'";
+        String line3 = "The random worlds are generated using an algorithm iteration haters would despise, but";
+        String line4 = "hey at least a proper world should generate. There are two avatars in the game, so";
+        String line5 = "two people can play. Journey together through the world, it's not that hard. But just";
+        String line6 = "try not to hit the walls. Winning isn't that hard in this game, just move. Both players";
+        String line7 = "will win, because like this project, this game is a partnership.";
+        String line8 = "~~~  ~~~  ~~~";
+        String line9 = "New Game (N) | Load Game (L) | Replay (R) | Quit (Q)";
+
+
+        StdDraw.text(width/2, (height/2) + 12, header);
+        StdDraw.text(width/2, (height/2) + 9, line1);
+        StdDraw.text(width/ 2, (height/2) + 6, line2);
+        StdDraw.text(width / 2, (height / 2) + 3, line3);
+        StdDraw.text(width / 2, height / 2, line4);
+        StdDraw.text(width/2, (height/2) - 3, line5);
+        StdDraw.text(width / 2, (height / 2) - 6, line6);
+        StdDraw.text(width / 2, (height / 2) - 9, line7);
+        StdDraw.text(width/2, (height/2) - 12, line8);
+        StdDraw.text(width/2, (height/2) - 15, line9);
+        StdDraw.show();
+    }
+
+    public void drawWinnerWindow(){
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        StdDraw.setCanvasSize(this.width * 16, this.height * 16);
+        Font font = new Font("Monaco", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setXscale(0, this.width);
+        StdDraw.setYscale(0, this.height);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+        StdDraw.setPenColor(StdDraw.YELLOW);
+        StdDraw.setFont(font);
+
+        String line1 = "CONGRATS! YOU'RE BOTH WINNERS";
+        String line2 = "TEAMWORK MAKES THE DREAM WORK";
+
+
+        StdDraw.text(width / 2, (height / 2) + 3, line1);
+        StdDraw.text(width / 2, height / 2, line2);
+
+        StdDraw.show();
+    }
 
 }
 
