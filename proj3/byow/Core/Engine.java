@@ -190,9 +190,9 @@ public class Engine {
                 allStrokes.append(commandToProcess.charAt(0));
                 commandToProcess = commandToProcess.substring(1);
 
-                if (validateBombDis() == 1)  {
+                if (validateBombDis() == 1 && !avatar.warned)  {
                     drawWarning(1);
-                } else if (validateBombDis() == 2) {
+                } else if (validateBombDis() == 2 && !avatar2.warned) {
                     drawWarning(2);
                 }
 
@@ -615,9 +615,11 @@ public class Engine {
         String line2 = "Be careful there is a bomb nearby.";
 
         if (player == 1) {
+            avatar.warned = true;
             line1 = "Aang is approaching the treasure!";
 
         } else {
+            avatar2.warned = true;
             line1 = "Katara is approaching the treasure!";
 
         }

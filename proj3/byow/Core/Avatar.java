@@ -8,10 +8,12 @@ public class Avatar {
     protected int totalCalories = 100;
     protected Pos location;
     private TETile t;
+    protected boolean warned;
 
     public Avatar(Pos loc, TETile tile) {
         location = loc;
         t = tile;
+        warned = false;
     }
 
     protected TETile[][] goUp(TETile[][] world) {
