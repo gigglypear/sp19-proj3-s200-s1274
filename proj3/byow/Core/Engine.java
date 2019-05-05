@@ -34,6 +34,7 @@ public class Engine {
     private TETile[][] world;
     private Avatar avatar;
     private Avatar avatar2;
+    private Pos treasureBox;
 //    private String input;
 
     private Pos mouseCood;
@@ -188,6 +189,12 @@ public class Engine {
                 allStrokes.append(commandToProcess.charAt(0));
                 commandToProcess = commandToProcess.substring(1);
 
+                if (validatewin() == 1) {
+                    drawWinnerWindow(1);
+                } else if (validatewin() == 2) {
+                    drawWinnerWindow(2);
+                }
+
             }
             if (commandToProcess.length() == 0) {
                 terminate = true;
@@ -227,6 +234,7 @@ public class Engine {
         world = newworld.generateWorld(world);
         avatar = newworld.avatar;
         avatar2 = newworld.avatar2;
+        treasureBox = newworld.treasureBox;
 
         //if there are more commands after "N#S",
         if (pointer + 1 < input.length()) {
@@ -299,6 +307,8 @@ public class Engine {
             return "FLOOR";
         } else if (t.equals(Tileset.NOTHING)) {
             return "VOID";
+        } else if (t.equals(Tileset.TREASURE)) {
+            return "Treasure Box";
         } else {
             return "???";
         }
@@ -317,6 +327,8 @@ public class Engine {
             return "To floor or to ceiling? #rendering problems";
         } else if (t.equals(Tileset.NOTHING)) {
             return "public static void or just public void?";
+        } else if (t.equals(Tileset.TREASURE)) {
+            return "MY PRECIOUS XD";
         } else {
             return "idk sorry";
         }
@@ -374,6 +386,16 @@ public class Engine {
 //        Engine engine = new Engine();
 //        engine.replay();
 //    }
+
+    private int validatewin() {
+        if (avatar.location.x == treasureBox.x && avatar.location.y == treasureBox.y) {
+            return 1;
+        } else if (avatar2.location.x == treasureBox.x && avatar2.location.y == treasureBox.y) {
+            return 2;
+        }
+
+        return 0;
+    }
 
     public void drawWelcomeWindow() {
 
@@ -453,7 +475,9 @@ public class Engine {
         StdDraw.show();
     }
 
-    public void drawWinnerWindow(){
+    public void drawWinnerWindow(int player){
+        StdDraw.clear(Color.BLACK);
+
         this.width = WIDTH;
         this.height = HEIGHT;
 
@@ -468,14 +492,25 @@ public class Engine {
         StdDraw.setPenColor(StdDraw.YELLOW);
         StdDraw.setFont(font);
 
-        String line1 = "CONGRATS! YOU'RE BOTH WINNERS";
-        String line2 = "TEAMWORK MAKES THE DREAM WORK";
+        String line1;
+        String line2;
+
+        if (player == 1) {
+            line1 = "CONGRATS Aang!";
+            line2 = "Way to go, Katara! You tried:)";
+        } else {
+            line1 = "CONGRATS Katara!";
+            line2 = "Way to go, Aang! You tried:)";
+        }
+
 
 
         StdDraw.text(width / 2, (height / 2) + 3, line1);
         StdDraw.text(width / 2, height / 2, line2);
 
         StdDraw.show();
+        StdDraw.pause(10000);
+        System.exit(0);
     }
 
 }

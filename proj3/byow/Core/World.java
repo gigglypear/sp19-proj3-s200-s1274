@@ -28,6 +28,7 @@ public class World {
 
     protected Avatar avatar;
     protected Avatar avatar2;
+    protected Pos treasureBox;
 
     public World(long seed) {
         allRooms = new ArrayList<>();
@@ -98,7 +99,7 @@ public class World {
         Room firstRm = allRooms.get(0);
         this.putAvatar(firstRm, world, RANDOM, 1);
         this.putAvatar(allRooms.get(maxRms - 1), world, RANDOM, 2);
-
+        treasureBox = putTreasureBox(allRooms.get(maxRms - 2), world, RANDOM);
         return world;
 
 
@@ -152,6 +153,19 @@ public class World {
             this.avatar2 = new Avatar(avatarLoc, Tileset.AVATAR2);
             world[x][y] = Tileset.AVATAR2;
         }
+    }
+
+    protected Pos putTreasureBox (Room r, TETile[][] world, Random rand) {
+        Pos rStart = r.getStartP();
+        Pos rEnd = r.getEndP();
+
+        int x = rand.nextInt(rEnd.x - rStart.x - 1) + rStart.x + 1;
+        int y = rand.nextInt(rEnd.y - rStart.y - 1) + rStart.y + 1;
+
+        Pos treasure = new Pos(x, y);
+        world[x][y] = Tileset.TREASURE;
+
+        return treasure;
     }
 
 

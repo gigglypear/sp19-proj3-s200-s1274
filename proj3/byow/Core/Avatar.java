@@ -6,7 +6,7 @@ import byow.TileEngine.Tileset;
 public class Avatar {
 
     public int totalCalories = 0;
-    private Pos location;
+    protected Pos location;
     private TETile t;
 
     public Avatar(Pos loc, TETile tile) {
